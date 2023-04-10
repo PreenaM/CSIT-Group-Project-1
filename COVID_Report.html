@@ -369,8 +369,15 @@ Objectives</a>
 <li><a href="#objective-2-where-is-the-most-recent-area-to-have-a-first-confirmed-case" id="toc-objective-2-where-is-the-most-recent-area-to-have-a-first-confirmed-case">Objective
 2: Where is the most recent area to have a first confirmed
 case?</a></li>
-<li><a href="#objective-3" id="toc-objective-3">Objective 3</a></li>
+<li><a href="#objective-3-how-far-away-are-the-areas-from-objective-2-from-where-the-first-confirmed-cases-occurred" id="toc-objective-3-how-far-away-are-the-areas-from-objective-2-from-where-the-first-confirmed-cases-occurred">Objective
+3: How far away are the areas from objective 2 from where the first
+confirmed case(s) occurred?</a></li>
 <li><a href="#objective-4" id="toc-objective-4">Objective 4</a></li>
+<<<<<<< HEAD
+<li><a href="#objective-5" id="toc-objective-5">Objective 5</a></li>
+<li><a href="#github-log" id="toc-github-log">GitHub Log</a></li>
+=======
+>>>>>>> 0c91167233250f50707d3257baf0149c88ea5371
 </ul></li>
 <li><a href="#where-im-stuck" id="toc-where-im-stuck">Where I’m
 stuck</a></li>
@@ -466,24 +473,32 @@ for(date_column in (5:ncol(cases_df))){
 cat(&quot;The most recent area to have a first confirmed case is&quot;, newest_case)</code></pre>
 <pre><code>## The most recent area to have a first confirmed case is Korea, North</code></pre>
 </div>
-<div id="objective-3" class="section level3">
-<h3>Objective 3</h3>
-<pre class="r"><code>recent_region &lt;- &quot;Korea, North&quot;
-origin_city &lt;- &quot;Hubei&quot;
+<div id="objective-3-how-far-away-are-the-areas-from-objective-2-from-where-the-first-confirmed-cases-occurred" class="section level3">
+<h3>Objective 3: How far away are the areas from objective 2 from where
+the first confirmed case(s) occurred?</h3>
+<pre class="r"><code># assigns correct values to origin country and recent country variables using output from ob1 and ob2
+recent_region &lt;- newest_case
+origin_city &lt;- max_cases
 origin_country &lt;- &quot;China&quot;
 
+# subsets the lat and long values, using the row number that corresponds to the origin country
 origin_lat = cases_df[which(cases_df$Province.State == origin_city), 3]
 origin_long = cases_df[which(cases_df$Province.State == origin_city), 4]
+# creates a list of (longitude, latitude) -&gt; the correct input format for distm
 origin_coordinates &lt;- c(origin_long, origin_lat)
 
-
+# subsets the lat and long values, using the row number that corresponds to the most recent country
 recent_lat = cases_df[which(cases_df$Country.Region == recent_region), 3]
 recent_long = cases_df[which(cases_df$Country.Region == recent_region), 4]
+# creates a list of (longitude, latitude) -&gt; the correct input format for distm
 recent_coordinates &lt;- c(recent_long, recent_lat)
 
+# calculates distance between coordinates using distm
 distance = distm(origin_coordinates, recent_coordinates, fun=distGeo)
+# converts dist in meters to miles using conversion factor
 miles_distance = distance/1609
 
+# prints distance between two locations in a sentence using values from above
 sprintf(&quot;%s is %f miles away from %s, %s&quot;, recent_region, miles_distance, origin_city, origin_country)</code></pre>
 <pre><code>## [1] &quot;Korea, North is 1070.926759 miles away from Hubei, China&quot;</code></pre>
 </div>
@@ -1098,6 +1113,247 @@ min_risk_provinces &lt;- risk_scores_latest
 head( min_risk_provinces)</code></pre>
 </div>
 </div>
+<<<<<<< HEAD
+<div id="objective-5" class="section level3">
+<h3>Objective 5</h3>
+<pre class="r"><code># creates a list of all countries by subsetting the country column of the dataset
+countries &lt;- cases_df$Country.Region
+# removes duplicates (due to multiple provinces)
+countries &lt;- unique(countries)
+
+deaths = 0
+cases = 0
+
+# initialization of empty lists
+country_cases &lt;- c()
+country_deaths &lt;- c()
+
+# iterates through each unique country
+for(country in countries){
+  # creates a list of the indexes of every time the country appears 
+  country_duplicates &lt;- which(cases_df$Country.Region == country)
+  # iterates through each of the duplicate indexes (each province of that country)
+  for(dup in country_duplicates){
+    # adds the cases for that province to the total count for the country
+    cases &lt;- cases + cases_df[dup, 1147]
+  }
+  # appends the total case count for that country to the country_cases list
+  country_cases &lt;- append(country_cases, cases)
+  # resets case count to 0 before moving on to the next country in the list
+  cases = 0
+}
+
+# repeats same procedure, but with deaths data set
+for(country in countries){
+  country_duplicates &lt;- which(deaths_df$Country.Region == country)
+  for(dup in country_duplicates){
+      deaths &lt;- deaths + deaths_df[dup, 1147]
+  }
+  country_deaths &lt;- append(country_deaths, deaths)
+  deaths = 0
+}
+
+# creates a data frame with countries, their respective cases, and respective deaths
+overview &lt;- data.frame(countries, country_cases, country_deaths)
+
+# uses arrange function to create two different data frames, each sorted in descending order of case/death
+casewise &lt;- arrange(overview, -country_cases)
+deathwise &lt;- arrange(overview, -country_deaths)
+
+# creates new data frames that subset only the top 5 
+top_case &lt;- casewise[1:6,]
+top_death &lt;- deathwise[1:6,]
+
+# uses kable to display the data frames as visual tables
+kable(top_case)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+countries
+</th>
+<th style="text-align:right;">
+country_cases
+</th>
+<th style="text-align:right;">
+country_deaths
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+US
+</td>
+<td style="text-align:right;">
+103802702
+</td>
+<td style="text-align:right;">
+1123836
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+India
+</td>
+<td style="text-align:right;">
+44690738
+</td>
+<td style="text-align:right;">
+530779
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+France
+</td>
+<td style="text-align:right;">
+39866718
+</td>
+<td style="text-align:right;">
+166176
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Germany
+</td>
+<td style="text-align:right;">
+38249060
+</td>
+<td style="text-align:right;">
+168935
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Brazil
+</td>
+<td style="text-align:right;">
+37076053
+</td>
+<td style="text-align:right;">
+699276
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Japan
+</td>
+<td style="text-align:right;">
+33320438
+</td>
+<td style="text-align:right;">
+72997
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>kable(top_death)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+countries
+</th>
+<th style="text-align:right;">
+country_cases
+</th>
+<th style="text-align:right;">
+country_deaths
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+US
+</td>
+<td style="text-align:right;">
+103802702
+</td>
+<td style="text-align:right;">
+1123836
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Brazil
+</td>
+<td style="text-align:right;">
+37076053
+</td>
+<td style="text-align:right;">
+699276
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+India
+</td>
+<td style="text-align:right;">
+44690738
+</td>
+<td style="text-align:right;">
+530779
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Russia
+</td>
+<td style="text-align:right;">
+22075858
+</td>
+<td style="text-align:right;">
+388478
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mexico
+</td>
+<td style="text-align:right;">
+7483444
+</td>
+<td style="text-align:right;">
+333188
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+United Kingdom
+</td>
+<td style="text-align:right;">
+24658705
+</td>
+<td style="text-align:right;">
+220721
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="github-log" class="section level3">
+<h3>GitHub Log</h3>
+<pre class="bash"><code>git log --pretty=format:&quot;%nSubject: %s%nAuthor: %aN%nDate: %aD%nBody: %b&quot;</code></pre>
+<pre><code>## 
+## Subject: added comments for ob5
+## Author: PreenaM
+## Date: Sun, 9 Apr 2023 21:58:52 -0700
+## Body: 
+## 
+## Subject: added comments for ob3
+## Author: PreenaM
+## Date: Sun, 9 Apr 2023 21:52:56 -0700
+## Body: 
+## 
+## Subject: completed Objective 5 &amp; displayed both tables successfully, but comments pending
+## Author: PreenaM
+## Date: Sun, 9 Apr 2023 21:44:11 -0700
+## Body: 
+## 
+=======
 </div>
 <div id="where-im-stuck" class="section level1">
 <h1>Where I’m stuck</h1>
@@ -1131,6 +1387,7 @@ cases on”, most_recent_date, “is”, max_cases_province_latest.”)</p>
 ```bash
 git log --pretty=format:&quot;%nSubject: %s%nAuthor: %aN%nDate: %aD%nBody: %b&quot;</code></pre>
 <pre><code>## 
+<<<<<<< HEAD
 ## Subject: test
 ## Author: Morgan
 ## Date: Sun, 9 Apr 2023 22:08:15 -0700
@@ -1161,6 +1418,9 @@ git log --pretty=format:&quot;%nSubject: %s%nAuthor: %aN%nDate: %aD%nBody: %b&qu
 ## Date: Sun, 9 Apr 2023 21:44:11 -0700
 ## Body: 
 ## 
+=======
+>>>>>>> 0c91167233250f50707d3257baf0149c88ea5371
+>>>>>>> acc5ccea2a25942a82b7dcc157b01e2d852879eb
 ## Subject: updated ob1 to province instead of country
 ## Author: Morgan
 ## Date: Sun, 9 Apr 2023 20:10:43 -0700
