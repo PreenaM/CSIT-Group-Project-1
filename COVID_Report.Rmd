@@ -1,14 +1,14 @@
 ---
 title: "Project 1"
-author: "Name:  \n Partner: "
+author: "Name: Preena Maruthavelu, Morgan Henderson "
 date: "`r Sys.Date()`"
 output:
-  html_document:
-    toc: yes
-    toc_depth: 3
   pdf_document:
     toc: yes
     toc_depth: '3'
+  html_document:
+    toc: yes
+    toc_depth: 3
 header-includes:
 - \usepackage{booktabs}
 - \usepackage{longtable}
@@ -204,6 +204,9 @@ print(global_risk)
 ### Lowest Risk: 0%
 ### Highest Risk: 600%
 ### Global Risk: 3.2%
+
+It might be helpful to calculate risk scores for different areas of the world to identify the areas of the world that are most vulnerable to the COVID-19 pandemic. With this data, world organizations like WHO could identify areas where resources like vaccines, more health personnel, and PPE are most necessary. This could also inform people who are planning on traveling so they can avoid areas with high risk scores. However, there are some limitations to risk scores. There is a chance that the number of deaths and case counts themselves could be inaccurate. For example, many people may be asymptomatic or pass off COVID as cold-like symptoms may not be counted in the total case count, inflating the risk rate more than it is in reality. This may also be the case in more under-developed countries that do not have an efficient testing or reporting system. 
+
 
 ### Objective 5
 ```{r ob5}
