@@ -170,6 +170,7 @@ risk_scores_latest <- merged_df[,deaths_latest] / merged_df[,confirmed_cases_lat
 
 # Add risk scores to the end of the dataframe as a new column
 merged_df <- mutate(merged_df, risk_score = risk_scores_latest)
+merged_df[is.na(merged_df)]<- 0
 head(merged_df)
 
 # Find the lowest risk regions
@@ -191,13 +192,18 @@ highest_risk_highest_cases <- merged_df %>%
   filter(risk_score == max(risk_score[!is.na(risk_score)])) %>%
   filter(ncol(cases_df) == max(ncol(cases_df)))
 
-# Print the lowest risk table
+# Print the highest risk table
 print(highest_risk_highest_cases)
 
 highest_risk_province <- highest_risk_highest_cases %>%
   filter(X3.9.23.x == max(X3.9.23.x)) %>%
   pull(Country.Region)
 print(highest_risk_province)
+
+#Global risk
+
+global_risk <- mean(merged_df$risk_score)
+print(global_risk)
 
 ```
 
