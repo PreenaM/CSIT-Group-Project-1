@@ -147,14 +147,11 @@ sprintf("%s is %f miles away from %s, %s", recent_region, miles_distance, origin
 
 #### Objective 4.1
 ```{r ob4.1}
-#filter out cruise ship data from the data sets
-cases_df <- cases_df[!(is.na(cases_df$Lat) | cases_df$Lat == 0),]
 deaths_df <- deaths_df[!(is.na(deaths_df$Lat) | deaths_df$Lat == 0),]
 
 # Extract the most recent date
 most_recent_date <- tail(colnames(cases_df), 1)
 print(most_recent_date)
-
 
 # Extract the columns for the most recent date
 confirmed_cases_latest<- dplyr::select(cases_df, Province.State, Country.Region, ncol(cases_df)); 
@@ -173,14 +170,12 @@ merged_df <- mutate(merged_df, risk_score = risk_scores_latest)
 merged_df[is.na(merged_df)]<- 0
 head(merged_df)
 
-# Find the lowest risk regions
 lowest_risk_highest_cases <- merged_df %>%
   filter(risk_score == min(risk_score[!is.na(risk_score)])) %>%
   filter(ncol(cases_df) == max(ncol(cases_df)))
 
 # Print the lowest risk table
 print(lowest_risk_highest_cases)
-
 lowest_risk_province <- lowest_risk_highest_cases %>%
   filter(X3.9.23.x == max(X3.9.23.x)) %>%
   pull(Province.State)
@@ -206,11 +201,10 @@ global_risk <- mean(merged_df$risk_score)
 print(global_risk)
 
 ```
-
-
-#### Objective 4.2
-```{r ob4.2}
-```
+Risk Comparisons
+Lowest Risk: 0%
+Highest Risk: 600%
+Global Risk: 3.2%
 
 ### Objective 5
 ```{r ob5}
