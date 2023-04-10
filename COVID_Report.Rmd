@@ -3,12 +3,12 @@ title: "Project 1"
 author: "Name:  \n Partner: "
 date: "`r Sys.Date()`"
 output:
-  pdf_document:
-    toc: yes
-    toc_depth: '3'
   html_document:
     toc: yes
     toc_depth: 3
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
 header-includes:
 - \usepackage{booktabs}
 - \usepackage{longtable}
