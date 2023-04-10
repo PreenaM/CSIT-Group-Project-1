@@ -2,25 +2,28 @@
 title: "Project 1"
 author: "Name:  \n Partner: "
 date: "`r Sys.Date()`"
-output: 
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
   html_document:
-    toc: true
+    toc: yes
     toc_depth: 3
 header-includes:
-  - \usepackage{booktabs}
-  - \usepackage{longtable}
-  - \usepackage{array}
-  - \usepackage{multirow}
-  - \usepackage{wrapfig}
-  - \usepackage{float}
-  - \usepackage{colortbl}
-  - \usepackage{pdflscape}
-  - \usepackage{tabu}
-  - \usepackage{threeparttable}
-  - \usepackage{threeparttablex}
-  - \usepackage[normalem]{ulem}
-  - \usepackage{makecell}
-  - \usepackage{xcolor}
+- \usepackage{booktabs}
+- \usepackage{longtable}
+- \usepackage{array}
+- \usepackage{multirow}
+- \usepackage{wrapfig}
+- \usepackage{float}
+- \usepackage{colortbl}
+- \usepackage{pdflscape}
+- \usepackage{tabu}
+- \usepackage{threeparttable}
+- \usepackage{threeparttablex}
+- \usepackage[normalem]{ulem}
+- \usepackage{makecell}
+- \usepackage{xcolor}
 ---
 ```{r setup, include = FALSE}
 #### Load necessary packages ####
@@ -111,8 +114,8 @@ cat("The most recent area to have a first confirmed case is", newest_case)
 
 ### Objective 3
 ```{r ob3}
-recent_region <- "Korea, North"
-origin_city <- "Hubei"
+recent_region <- newest_case
+origin_city <- max_cases
 origin_country <- "China"
 
 origin_lat = cases_df[which(cases_df$Province.State == origin_city), 3]
@@ -160,6 +163,48 @@ most_confirmations <- which.max(cases_df[, ncol(cases_df)])
 
 #### Objective 4.2
 ```{r ob4.2}
+```
+
+### Objective 5
+```{r ob5}
+countries <- cases_df$Country.Region
+countries <- unique(countries)
+
+deaths = 0
+cases = 0
+
+country_cases <- c()
+country_deaths <- c()
+
+for(country in countries){
+  country_duplicates <- which(cases_df$Country.Region == country)
+  for(dup in country_duplicates){
+      cases <- cases + cases_df[dup, 1147]
+  }
+  country_cases <- append(country_cases, cases)
+  cases = 0
+}
+
+for(country in countries){
+  country_duplicates <- which(deaths_df$Country.Region == country)
+  for(dup in country_duplicates){
+      deaths <- deaths + deaths_df[dup, 1147]
+  }
+  country_deaths <- append(country_deaths, deaths)
+  deaths = 0
+}
+
+overview <- data.frame(countries, country_cases, country_deaths)
+casewise <- arrange(overview, -country_cases)
+deathwise <- arrange(overview, -country_deaths)
+
+top_case <- casewise[1:6,]
+top_death <- deathwise[1:6,]
+
+kable(top_case)
+kable(top_death)
+
+
 ```
 
 ### GitHub Log
