@@ -112,24 +112,31 @@ cat("The most recent area to have a first confirmed case is", newest_case)
 
 ```
 
-### Objective 3
+### Objective 3: How far away are the areas from objective 2 from where the first confirmed case(s) occurred? 
 ```{r ob3}
+# assigns correct values to origin country and recent country variables using output from ob1 and ob2
 recent_region <- newest_case
 origin_city <- max_cases
 origin_country <- "China"
 
+# subsets the lat and long values, using the row number that corresponds to the origin country
 origin_lat = cases_df[which(cases_df$Province.State == origin_city), 3]
 origin_long = cases_df[which(cases_df$Province.State == origin_city), 4]
+# creates a list of (longitude, latitude) -> the correct input format for distm
 origin_coordinates <- c(origin_long, origin_lat)
 
-
+# subsets the lat and long values, using the row number that corresponds to the most recent country
 recent_lat = cases_df[which(cases_df$Country.Region == recent_region), 3]
 recent_long = cases_df[which(cases_df$Country.Region == recent_region), 4]
+# creates a list of (longitude, latitude) -> the correct input format for distm
 recent_coordinates <- c(recent_long, recent_lat)
 
+# calculates distance between coordinates using distm
 distance = distm(origin_coordinates, recent_coordinates, fun=distGeo)
+# converts dist in meters to miles using conversion factor
 miles_distance = distance/1609
 
+# prints distance between two locations in a sentence using values from above
 sprintf("%s is %f miles away from %s, %s", recent_region, miles_distance, origin_city, origin_country)
 
 
