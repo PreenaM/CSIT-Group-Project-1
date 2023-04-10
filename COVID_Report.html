@@ -364,7 +364,8 @@ Partner:</h4>
 <li><a href="#project-objectives" id="toc-project-objectives">Project
 Objectives</a>
 <ul>
-<li><a href="#objective-1" id="toc-objective-1">Objective 1</a></li>
+<li><a href="#objective-1-what-was-the-origin-country-of-the-covid-19-outbreak" id="toc-objective-1-what-was-the-origin-country-of-the-covid-19-outbreak">Objective
+1: What was the origin country of the COVID-19 outbreak?</a></li>
 <li><a href="#objective-2-where-is-the-most-recent-area-to-have-a-first-confirmed-case" id="toc-objective-2-where-is-the-most-recent-area-to-have-a-first-confirmed-case">Objective
 2: Where is the most recent area to have a first confirmed
 case?</a></li>
@@ -402,11 +403,13 @@ format.</p>
 </div>
 <div id="project-objectives" class="section level2">
 <h2>Project Objectives</h2>
-<div id="objective-1" class="section level3">
-<h3>Objective 1</h3>
-<pre class="r"><code>confirmed_cases &lt;- &quot;https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv&quot;
+<div id="objective-1-what-was-the-origin-country-of-the-covid-19-outbreak" class="section level3">
+<h3>Objective 1: What was the origin country of the COVID-19
+outbreak?</h3>
+<pre class="r"><code>#load data
+confirmed_cases &lt;- &quot;https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv&quot;
 covid_deaths &lt;- &quot;https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv&quot;
-#load data
+
 cases_df &lt;- read.csv(confirmed_cases, header = TRUE, na.strings = c(&quot;&quot;, &quot; &quot;))
 deaths_df &lt;- read.csv(covid_deaths, header = TRUE, na.strings = c(&quot;&quot;, &quot; &quot;))
 
@@ -462,6 +465,23 @@ cat(&quot;The most recent area to have a first confirmed case is&quot;, newest_c
 <h3>Objective 4</h3>
 <div id="objective-4.1" class="section level4">
 <h4>Objective 4.1</h4>
+<pre class="r"><code>#filter out cruise ship data from the data sets
+cases_df &lt;- cases_df[!(is.na(cases_df$Lat) | cases_df$Lat == 0),]
+deaths_df &lt;- deaths_df[!(is.na(deaths_df$Lat) | deaths_df$Lat == 0),]
+
+# Calculate risk scores
+risk_scores &lt;- deaths_df[, -c(1:4)] / cases_df[, -c(1:4)] * 100
+risk_scores &lt;- as.numeric(as.matrix(risk_scores))
+
+
+# Find area with lowest risk score and most confirmations
+
+lowest_risk &lt;- which.min(risk_scores)
+most_confirmations &lt;- which.max(cases_df[, ncol(cases_df)])
+
+#paste(&quot;The area of the world with the lowest risk score is&quot;, colnames(risk_scores)[lowest_risk],
+#      &quot;with a risk score of&quot;, risk_scores[most_confirmations, lowest_risk],
+#      &quot;and the most confirmations of&quot;, cases_df[most_confirmations, ncol(cases_df)])</code></pre>
 </div>
 <div id="objective-4.2" class="section level4">
 <h4>Objective 4.2</h4>
@@ -471,6 +491,11 @@ cat(&quot;The most recent area to have a first confirmed case is&quot;, newest_c
 <h3>GitHub Log</h3>
 <pre class="bash"><code>git log --pretty=format:&quot;%nSubject: %s%nAuthor: %aN%nDate: %aD%nBody: %b&quot;</code></pre>
 <pre><code>## 
+## Subject: added updated objective 1
+## Author: Morgan
+## Date: Sun, 9 Apr 2023 18:57:00 -0700
+## Body: 
+## 
 ## Subject: Completed Objective 2 using confirmed cases df, added comments
 ## Author: PreenaM
 ## Date: Sun, 9 Apr 2023 17:00:51 -0700

@@ -54,12 +54,12 @@ Date fields are stored in MM/DD/YYYY format.
 
 ## Project Objectives
 
-### Objective 1
+### Objective 1: What was the origin country of the COVID-19 outbreak?
 ```{r ob1}
-
+#load data
 confirmed_cases <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
 covid_deaths <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
-#load data
+
 cases_df <- read.csv(confirmed_cases, header = TRUE, na.strings = c("", " "))
 deaths_df <- read.csv(covid_deaths, header = TRUE, na.strings = c("", " "))
 
@@ -118,6 +118,24 @@ cat("The most recent area to have a first confirmed case is", newest_case)
 
 #### Objective 4.1
 ```{r ob4.1}
+#filter out cruise ship data from the data sets
+cases_df <- cases_df[!(is.na(cases_df$Lat) | cases_df$Lat == 0),]
+deaths_df <- deaths_df[!(is.na(deaths_df$Lat) | deaths_df$Lat == 0),]
+
+# Calculate risk scores
+risk_scores <- deaths_df[, -c(1:4)] / cases_df[, -c(1:4)] * 100
+risk_scores <- as.numeric(as.matrix(risk_scores))
+
+
+# Find area with lowest risk score and most confirmations
+
+lowest_risk <- which.min(risk_scores)
+most_confirmations <- which.max(cases_df[, ncol(cases_df)])
+
+#paste("The area of the world with the lowest risk score is", colnames(risk_scores)[lowest_risk],
+#      "with a risk score of", risk_scores[most_confirmations, lowest_risk],
+#      "and the most confirmations of", cases_df[most_confirmations, ncol(cases_df)])
+
 ```
 
 #### Objective 4.2
