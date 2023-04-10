@@ -373,9 +373,46 @@ case?</a></li>
 3: How far away are the areas from objective 2 from where the first
 confirmed case(s) occurred?</a></li>
 <li><a href="#objective-4" id="toc-objective-4">Objective 4</a></li>
+<<<<<<< HEAD
 <li><a href="#objective-5" id="toc-objective-5">Objective 5</a></li>
 <li><a href="#github-log" id="toc-github-log">GitHub Log</a></li>
+=======
+>>>>>>> 0c91167233250f50707d3257baf0149c88ea5371
 </ul></li>
+<li><a href="#find-the-provinces-with-the-minimum-risk-score-for-the-most-recent-date" id="toc-find-the-provinces-with-the-minimum-risk-score-for-the-most-recent-date">Find
+the provinces with the minimum risk score for the most recent
+date</a></li>
+<li><a href="#filter-cases_df-to-only-include-the-provinces-with-the-minimum-risk-score-for-the-most-recent-date" id="toc-filter-cases_df-to-only-include-the-provinces-with-the-minimum-risk-score-for-the-most-recent-date">Filter
+cases_df to only include the provinces with the minimum risk score for
+the most recent date</a></li>
+<li><a href="#find-the-province-with-the-most-confirmed-cases-among-those-with-the-minimum-risk-score-for-the-most-recent-date" id="toc-find-the-province-with-the-most-confirmed-cases-among-those-with-the-minimum-risk-score-for-the-most-recent-date">Find
+the province with the most confirmed cases among those with the minimum
+risk score for the most recent date</a></li>
+<li><a href="#extract-the-confirmed-cases-number-for-the-province-with-the-lowest-risk-score-and-the-most-confirmed-cases-for-the-most-recent-date" id="toc-extract-the-confirmed-cases-number-for-the-province-with-the-lowest-risk-score-and-the-most-confirmed-cases-for-the-most-recent-date">Extract
+the confirmed cases number for the province with the lowest risk score
+and the most confirmed cases for the most recent date</a></li>
+<li><a href="#output-the-result" id="toc-output-the-result">Output the
+result</a></li>
+<li><a href="#store-location-columns-in-separate-variables" id="toc-store-location-columns-in-separate-variables">Store location
+columns in separate variables</a></li>
+<li><a href="#remove-location-columns-from-data-frames" id="toc-remove-location-columns-from-data-frames">Remove location
+columns from data frames</a></li>
+<li><a href="#calculate-risk-scores" id="toc-calculate-risk-scores">Calculate risk scores</a></li>
+<li><a href="#add-location-columns-back-to-risk_scores-data-frame" id="toc-add-location-columns-back-to-risk_scores-data-frame">Add
+location columns back to risk_scores data frame</a></li>
+<li><a href="#calculate-risk-scores-1" id="toc-calculate-risk-scores-1">Calculate risk scores</a></li>
+<li><a href="#find-the-minimum-risk-score-across-all-provinces" id="toc-find-the-minimum-risk-score-across-all-provinces">Find the
+minimum risk score across all provinces</a></li>
+<li><a href="#find-the-provinces-with-the-minimum-risk-score" id="toc-find-the-provinces-with-the-minimum-risk-score">Find the
+provinces with the minimum risk score</a></li>
+<li><a href="#filter-cases_df-to-only-include-the-provinces-with-the-minimum-risk-score" id="toc-filter-cases_df-to-only-include-the-provinces-with-the-minimum-risk-score">Filter
+cases_df to only include the provinces with the minimum risk
+score</a></li>
+<li><a href="#find-the-province-with-the-most-confirmed-cases-among-those-with-the-minimum-risk-score" id="toc-find-the-province-with-the-most-confirmed-cases-among-those-with-the-minimum-risk-score">Find
+the province with the most confirmed cases among those with the minimum
+risk score</a></li>
+<li><a href="#output-the-result-1" id="toc-output-the-result-1">Output
+the result</a></li>
 </ul>
 </div>
 
@@ -497,24 +534,29 @@ sprintf(&quot;%s is %f miles away from %s, %s&quot;, recent_region, miles_distan
 cases_df &lt;- cases_df[!(is.na(cases_df$Lat) | cases_df$Lat == 0),]
 deaths_df &lt;- deaths_df[!(is.na(deaths_df$Lat) | deaths_df$Lat == 0),]
 
-# Calculate risk scores
-risk_scores &lt;- deaths_df[, -c(1:4)] / cases_df[, -c(1:4)] * 100
-risk_scores &lt;- as.numeric(as.matrix(risk_scores))
+# Extract the most recent date
+most_recent_date &lt;- tail(colnames(cases_df), 1)
+print(most_recent_date)</code></pre>
+<pre><code>## [1] &quot;X3.9.23&quot;</code></pre>
+<pre class="r"><code># Filter out the columns with the dates
+#confirmed_cases_df &lt;- cases_df[, -c(1:4)]
+#deaths_df &lt;- deaths_df[, -c(1:4)]
 
+# Extract the columns for the most recent date
+confirmed_cases_latest&lt;- dplyr::select(cases_df, Province.State, Country.Region, ncol(cases_df)); 
+deaths_latest  &lt;- dplyr::select(deaths_df, Province.State, Country.Region, ncol(deaths_df))
 
-# Find area with lowest risk score and most confirmations
+# Calculate risk scores for the most recent date
+risk_scores_latest &lt;- deaths_latest[,ncol(deaths_latest)] / confirmed_cases_latest[,ncol(deaths_latest)] * 100
+risk_scores_latest &lt;- as.numeric(as.matrix(risk_scores_latest))
 
-lowest_risk &lt;- which.min(risk_scores)
-most_confirmations &lt;- which.max(cases_df[, ncol(cases_df)])
-
-#paste(&quot;The area of the world with the lowest risk score is&quot;, colnames(risk_scores)[lowest_risk],
-#      &quot;with a risk score of&quot;, risk_scores[most_confirmations, lowest_risk],
-#      &quot;and the most confirmations of&quot;, cases_df[most_confirmations, ncol(cases_df)])</code></pre>
+# Find the minimum risk score across all provinces for the most recent date
+min_risk_score_latest &lt;- min(risk_scores_latest, na.rm = TRUE)
+print(min_risk_score_latest)</code></pre>
+<pre><code>## [1] 0</code></pre>
 </div>
-<div id="objective-4.2" class="section level4">
-<h4>Objective 4.2</h4>
 </div>
-</div>
+<<<<<<< HEAD
 <div id="objective-5" class="section level3">
 <h3>Objective 5</h3>
 <pre class="r"><code># creates a list of all countries by subsetting the country column of the dataset
@@ -754,6 +796,106 @@ United Kingdom
 ## Date: Sun, 9 Apr 2023 21:44:11 -0700
 ## Body: 
 ## 
+=======
+</div>
+<div id="find-the-provinces-with-the-minimum-risk-score-for-the-most-recent-date" class="section level1">
+<h1>Find the provinces with the minimum risk score for the most recent
+date</h1>
+<p>min_risk_provinces_latest &lt;-
+colnames(risk_scores_latest)[which(risk_scores_latest ==
+min_risk_score_latest, arr.ind = TRUE)[, “col”]] head(
+min_risk_provinces_latest)</p>
+</div>
+<div id="filter-cases_df-to-only-include-the-provinces-with-the-minimum-risk-score-for-the-most-recent-date" class="section level1">
+<h1>Filter cases_df to only include the provinces with the minimum risk
+score for the most recent date</h1>
+<p>min_risk_cases_latest &lt;- cases_df[, c(1:4,
+min_risk_provinces_latest, most_recent_date)]</p>
+</div>
+<div id="find-the-province-with-the-most-confirmed-cases-among-those-with-the-minimum-risk-score-for-the-most-recent-date" class="section level1">
+<h1>Find the province with the most confirmed cases among those with the
+minimum risk score for the most recent date</h1>
+<p>max_cases_province_latest &lt;-
+min_risk_cases_latest[which.max(min_risk_cases_latest[,
+ncol(min_risk_cases_latest) - 1]), “Province.State”]</p>
+</div>
+<div id="extract-the-confirmed-cases-number-for-the-province-with-the-lowest-risk-score-and-the-most-confirmed-cases-for-the-most-recent-date" class="section level1">
+<h1>Extract the confirmed cases number for the province with the lowest
+risk score and the most confirmed cases for the most recent date</h1>
+<p>max_cases_confirmed_latest &lt;-
+min_risk_cases_latest[which(min_risk_cases_latest[, “Province.State”] ==
+max_cases_province_latest), most_recent_date]</p>
+</div>
+<div id="output-the-result" class="section level1">
+<h1>Output the result</h1>
+<p>paste(“The province with the lowest risk score and the most confirmed
+cases on”, most_recent_date, “is”, max_cases_province_latest, “with a
+risk score of”, min_risk_score_latest, “and”,
+max_cases_confirmed_latest, “confirmed cases.”)</p>
+<pre><code></code></pre>
+</div>
+<div id="store-location-columns-in-separate-variables" class="section level1">
+<h1>Store location columns in separate variables</h1>
+<p>location_cols_cases &lt;- cases_df[, 1:4] location_cols_deaths &lt;-
+deaths_df[, 1:4]</p>
+</div>
+<div id="remove-location-columns-from-data-frames" class="section level1">
+<h1>Remove location columns from data frames</h1>
+<p>cases_df &lt;- cases_df[, -c(1:4)] deaths_df &lt;- deaths_df[,
+-c(1:4)]</p>
+</div>
+<div id="calculate-risk-scores" class="section level1">
+<h1>Calculate risk scores</h1>
+<p>risk_scores &lt;- deaths_df / cases_df * 100</p>
+</div>
+<div id="add-location-columns-back-to-risk_scores-data-frame" class="section level1">
+<h1>Add location columns back to risk_scores data frame</h1>
+<p>risk_scores &lt;- cbind(location_cols_deaths, risk_scores)</p>
+</div>
+<div id="calculate-risk-scores-1" class="section level1">
+<h1>Calculate risk scores</h1>
+<p>risk_scores &lt;- deaths_df[, -c(1:4)] / cases_df[, -c(1:4)] *
+100</p>
+</div>
+<div id="find-the-minimum-risk-score-across-all-provinces" class="section level1">
+<h1>Find the minimum risk score across all provinces</h1>
+<p>min_risk_score &lt;- min(risk_scores, na.rm = TRUE)
+print(min_risk_score)</p>
+<p>min_risk &lt;- which(risk_scores == min_risk_score)
+min_risk_provinces &lt;- risk_scores$Province.State[min_risk]
+print(min_risk_provinces)</p>
+</div>
+<div id="find-the-provinces-with-the-minimum-risk-score" class="section level1">
+<h1>Find the provinces with the minimum risk score</h1>
+<p>min_risk_provinces &lt;- colnames(risk_scores)[which(risk_scores ==
+min_risk_score, arr.ind = TRUE)[, “col”]]</p>
+</div>
+<div id="filter-cases_df-to-only-include-the-provinces-with-the-minimum-risk-score" class="section level1">
+<h1>Filter cases_df to only include the provinces with the minimum risk
+score</h1>
+<p>min_risk_cases &lt;- cases_df[, c(1:4, min_risk_provinces)]</p>
+</div>
+<div id="find-the-province-with-the-most-confirmed-cases-among-those-with-the-minimum-risk-score" class="section level1">
+<h1>Find the province with the most confirmed cases among those with the
+minimum risk score</h1>
+<p>max_cases_province &lt;- min_risk_cases[which.max(min_risk_cases[,
+ncol(min_risk_cases)]), “Province.State”]</p>
+</div>
+<div id="output-the-result-1" class="section level1">
+<h1>Output the result</h1>
+<p>paste(“The province with the lowest risk score and the most confirmed
+cases is”, max_cases_province, “with a risk score of”,
+min_risk_score)</p>
+<pre><code>
+#### Objective 4.2
+
+
+### GitHub Log
+
+```bash
+git log --pretty=format:&quot;%nSubject: %s%nAuthor: %aN%nDate: %aD%nBody: %b&quot;</code></pre>
+<pre><code>## 
+>>>>>>> 0c91167233250f50707d3257baf0149c88ea5371
 ## Subject: updated ob1 to province instead of country
 ## Author: Morgan
 ## Date: Sun, 9 Apr 2023 20:10:43 -0700
@@ -818,7 +960,6 @@ United Kingdom
 ## Author: PreenaM
 ## Date: Sun, 9 Apr 2023 10:34:23 -0700
 ## Body:</code></pre>
-</div>
 </div>
 
 
