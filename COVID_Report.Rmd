@@ -147,28 +147,45 @@ deaths_df <- deaths_df[!(is.na(deaths_df$Lat) | deaths_df$Lat == 0),]
 most_recent_date <- tail(colnames(cases_df), 1)
 print(most_recent_date)
 
-# Filter out the columns with the dates
-#confirmed_cases_df <- cases_df[, -c(1:4)]
-#deaths_df <- deaths_df[, -c(1:4)]
 
 # Extract the columns for the most recent date
 confirmed_cases_latest<- dplyr::select(cases_df, Province.State, Country.Region, ncol(cases_df)); 
 deaths_latest  <- dplyr::select(deaths_df, Province.State, Country.Region, ncol(deaths_df))
 
-# Calculate risk scores for the most recent date
-risk_scores_latest <- deaths_latest[,ncol(deaths_latest)] / confirmed_cases_latest[,ncol(deaths_latest)] * 100
-risk_scores_latest <- as.numeric(as.matrix(risk_scores_latest))
+#merge the data sets into one
+merged_df <- merge(confirmed_cases_latest, deaths_latest, by = c("Province.State", "Country.Region"))
 
+# Calculate risk scores for the most recent date
+confirmed_cases_latest <- "X3.9.23.x"
+deaths_latest <- "X3.9.23.y"
+risk_scores_latest <- merged_df[,deaths_latest] / merged_df[,confirmed_cases_latest] * 100
+#risk_scores_latest <- #as.numeric(as.matrix(risk_scores_latest)))
+# Add risk scores to the end of the table as a new column
+mutate(merged_df, risk_score = risk_scores_latest)
+head(merged_df)
+
+```
+```
 # Find the minimum risk score across all provinces for the most recent date
 min_risk_score_latest <- min(risk_scores_latest, na.rm = TRUE)
 print(min_risk_score_latest)
+
+#Find the provinces with the minimum risk score for the most recent date
+min_risk_provinces <- risk_scores_latest
+head( min_risk_provinces)
 ```
 # Where I'm stuck
-```
-Find the provinces with the minimum risk score for the most recent date
-min_risk_provinces_latest <- colnames(risk_scores_latest)[which(risk_scores_latest == min_risk_score_latest, arr.ind = TRUE)[, "col"]]
-head( min_risk_provinces_latest)
 
+
+```
+# Filter cases_df to only include the provinces with the minimum risk score for the most recent date
+min_risk_cases_latest <- cases_df[, c(1:4, min_risk_provinces_latest, most_recent_date)]
+```
+# Find the province with the most confirmed cases among those with the minimum risk score for the most recent date
+max_cases_province_latest <- min_risk_cases_latest[which.max(min_risk_cases_latest[, ncol(min_risk_cases_latest) - 1]), "Province.State"]
+
+# Extract the confirmed cases number for the province with the lowest risk score and the most confirmed cases for the most recent date
+max_cases_confirmed_latest <- min_risk_cases_latest[which(min_risk_cases_latest[, "Province.State"] == max_cases_province_latest), most_recent_date]
 
 # Output the result
 paste("The province with the lowest risk score and the most confirmed cases on", most_recent_date, "is", max_cases_province_latest.")
