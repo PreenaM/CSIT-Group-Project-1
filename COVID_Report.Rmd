@@ -141,7 +141,6 @@ sprintf("%s is %f miles away from %s, %s", recent_region, miles_distance, origin
 
 
 
-
 ```
 
 ### Objective 4
@@ -173,13 +172,18 @@ risk_scores_latest <- merged_df[,deaths_latest] / merged_df[,confirmed_cases_lat
 merged_df <- mutate(merged_df, risk_score = risk_scores_latest)
 head(merged_df)
 
+# 
 lowest_risk_highest_cases <- merged_df %>%
   filter(risk_score == min(risk_score[!is.na(risk_score)])) %>%
   filter(ncol(cases_df) == max(ncol(cases_df)))
 
-# Print the results
+# Print the lowest risk table
 print(lowest_risk_highest_cases)
 
+lowest_risk_province <- lowest_risk_highest_cases %>%
+  filter(X3.9.23.x == max(X3.9.23.x)) %>%
+  pull(Province.State)
+print(lowest_risk_province)
 
 ```
 
