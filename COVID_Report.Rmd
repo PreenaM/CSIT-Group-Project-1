@@ -26,7 +26,7 @@ header-includes:
 #### Load necessary packages ####
 # * These packages are not necessary to complete the assignment and or only used 
 #   to provide an example. 
-packages <- c("knitr", "kableExtra", "magrittr", "readr", "geosphere")
+packages <- c("knitr", "kableExtra", "magrittr", "readr", "geosphere", "dplyr")
 install_me <- packages[!(packages %in% installed.packages()[, "Package"])]
 if (length(install_me)) install.packages(install_me)
 library(knitr)
@@ -34,6 +34,7 @@ library(kableExtra)
 library(magrittr)
 library(readr)
 library(geosphere)
+library(dplyr)
 ```
 
 ## Background
@@ -55,35 +56,58 @@ Date fields are stored in MM/DD/YYYY format.
 
 ### Objective 1
 ```{r ob1}
-```{r ob1}
 confirmed_cases <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
+
 covid_deaths <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
+
+
 cases_df <- read.csv(confirmed_cases, header = TRUE, na.strings = c("", " "))
 deaths_df <- read.csv(covid_deaths, header = TRUE, na.strings = c("", " "))
-data <- dplyr::select(cases_df, Province.State, Country.Region, X1.22.20) %>%
-  
-dplyr::filter(X1.22.20 != 0)
-most_cases <- data[which.max(data$X1.22.20), ]
-print(most_cases)
-# Filter for the first day and select relevant columns
-first_day <- cases %>%
-  filter(X1.22.20 != 0) %>%
-  select(Province.State, Country.Region, X1.22.20)
-# Identify the country with the highest confirmed cases
-max_cases <- first_day %>%
-  filter(X1.22.20 == max(X1.22.20)) %>%
-  pull(Country.Region)
-# Determine if the country is the origin of the outbreak
-if (max_cases == "China") {
-  print("The origin of the COVID-19 outbreak is China.")
-} else {
-  print("The origin of the COVID-19 outbreak is not China.")
-}
+
+# data <- dplyr::select(cases_df, Province.State, Country.Region, X1.22.20) %>%
+#   
+# dplyr::filter(X1.22.20 != 0)
+# 
+# most_cases <- data[which.max(data$X1.22.20), ]
+# print(most_cases)
+# 
+# # Filter for the first day and select relevant columns
+# first_day <- cases %>%
+#   filter(X1.22.20 != 0) %>%
+#   select(Province.State, Country.Region, X1.22.20)
+# 
+# # Identify the country with the highest confirmed cases
+# max_cases <- first_day %>%
+#   filter(X1.22.20 == max(X1.22.20)) %>%
+#   print("Here is the country:", pull(Country.Region))
+# 
+# # Determine if the country is the origin of the outbreak
+# if (max_cases == "China") {
+#   print("The origin of the COVID-19 outbreak is China.")
+# } else {
+#   print("The origin of the COVID-19 outbreak is not China.")
+# }
+
 
 ```
 
-### Objective 2
+### Objective 2: Where is the most recent area to have a first confirmed case?
+
 ```{r ob2}
+
+# iterates through each column that contains a date
+for(date_column in (5:ncol(cases_df))){
+  
+  # iterates through each row (case count) for that specific date
+  for(x in (1:length(cases_df[,date_column]))){ # subsets the column for a single date
+    if(cases_df[x, date_column] == 1 & cases_df[x, date_column-1] == 0){ # checks if there is a new case 
+      newest_case <- cases_df[x, 2] # updates variable with the corresponding country name (column 2) 
+    }
+  }
+}
+
+cat("The most recent area to have a first confirmed case is", newest_case)
+
 ```
 
 ### Objective 3
