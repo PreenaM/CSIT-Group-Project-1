@@ -373,22 +373,9 @@ case?</a></li>
 3: How far away are the areas from objective 2 from where the first
 confirmed case(s) occurred?</a></li>
 <li><a href="#objective-4" id="toc-objective-4">Objective 4</a></li>
-<<<<<<< HEAD
 <li><a href="#objective-5" id="toc-objective-5">Objective 5</a></li>
 <li><a href="#github-log" id="toc-github-log">GitHub Log</a></li>
-=======
->>>>>>> 0c91167233250f50707d3257baf0149c88ea5371
 </ul></li>
-<li><a href="#where-im-stuck" id="toc-where-im-stuck">Where I’m
-stuck</a></li>
-<li><a href="#find-the-province-with-the-most-confirmed-cases-among-those-with-the-minimum-risk-score-for-the-most-recent-date" id="toc-find-the-province-with-the-most-confirmed-cases-among-those-with-the-minimum-risk-score-for-the-most-recent-date">Find
-the province with the most confirmed cases among those with the minimum
-risk score for the most recent date</a></li>
-<li><a href="#extract-the-confirmed-cases-number-for-the-province-with-the-lowest-risk-score-and-the-most-confirmed-cases-for-the-most-recent-date" id="toc-extract-the-confirmed-cases-number-for-the-province-with-the-lowest-risk-score-and-the-most-confirmed-cases-for-the-most-recent-date">Extract
-the confirmed cases number for the province with the lowest risk score
-and the most confirmed cases for the most recent date</a></li>
-<li><a href="#output-the-result" id="toc-output-the-result">Output the
-result</a></li>
 </ul>
 </div>
 
@@ -525,595 +512,56 @@ merged_df &lt;- merge(confirmed_cases_latest, deaths_latest, by = c(&quot;Provin
 confirmed_cases_latest &lt;- &quot;X3.9.23.x&quot;
 deaths_latest &lt;- &quot;X3.9.23.y&quot;
 risk_scores_latest &lt;- merged_df[,deaths_latest] / merged_df[,confirmed_cases_latest] * 100
-#risk_scores_latest &lt;- #as.numeric(as.matrix(risk_scores_latest)))
-# Add risk scores to the end of the table as a new column
-mutate(merged_df, risk_score = risk_scores_latest)</code></pre>
-<pre><code>##                                   Province.State
-## 1                                        Alberta
-## 2                                       Anguilla
-## 3                                          Anhui
-## 4                                          Aruba
-## 5                   Australian Capital Territory
-## 6                                        Beijing
-## 7                                        Bermuda
-## 8               Bonaire, Sint Eustatius and Saba
-## 9                               British Columbia
-## 10                        British Virgin Islands
-## 11                                Cayman Islands
-## 12                               Channel Islands
-## 13                                     Chongqing
-## 14                                  Cook Islands
-## 15                                       Curacao
-## 16                   Falkland Islands (Malvinas)
-## 17                                 Faroe Islands
-## 18                                 French Guiana
-## 19                              French Polynesia
-## 20                                        Fujian
-## 21                                         Gansu
-## 22                                     Gibraltar
-## 23                                     Greenland
-## 24                                    Guadeloupe
-## 25                                     Guangdong
-## 26                                       Guangxi
-## 27                                      Guernsey
-## 28                                       Guizhou
-## 29                                        Hainan
-## 30                                         Hebei
-## 31                                  Heilongjiang
-## 32                                         Henan
-## 33                                     Hong Kong
-## 34                                         Hubei
-## 35                                         Hunan
-## 36                                Inner Mongolia
-## 37                                   Isle of Man
-## 38                                        Jersey
-## 39                                       Jiangsu
-## 40                                       Jiangxi
-## 41                                         Jilin
-## 42                                      Liaoning
-## 43                                         Macau
-## 44                                      Manitoba
-## 45                                    Martinique
-## 46                                       Mayotte
-## 47                                    Montserrat
-## 48                                          &lt;NA&gt;
-## 49                                          &lt;NA&gt;
-## 50                                          &lt;NA&gt;
-## 51                                          &lt;NA&gt;
-## 52                                          &lt;NA&gt;
-## 53                                          &lt;NA&gt;
-## 54                                          &lt;NA&gt;
-## 55                                          &lt;NA&gt;
-## 56                                          &lt;NA&gt;
-## 57                                          &lt;NA&gt;
-## 58                                          &lt;NA&gt;
-## 59                                          &lt;NA&gt;
-## 60                                          &lt;NA&gt;
-## 61                                          &lt;NA&gt;
-## 62                                          &lt;NA&gt;
-## 63                                          &lt;NA&gt;
-## 64                                          &lt;NA&gt;
-## 65                                          &lt;NA&gt;
-## 66                                          &lt;NA&gt;
-## 67                                          &lt;NA&gt;
-## 68                                          &lt;NA&gt;
-## 69                                          &lt;NA&gt;
-## 70                                          &lt;NA&gt;
-## 71                                          &lt;NA&gt;
-## 72                                          &lt;NA&gt;
-## 73                                          &lt;NA&gt;
-## 74                                          &lt;NA&gt;
-## 75                                          &lt;NA&gt;
-## 76                                          &lt;NA&gt;
-## 77                                          &lt;NA&gt;
-## 78                                          &lt;NA&gt;
-## 79                                          &lt;NA&gt;
-## 80                                          &lt;NA&gt;
-## 81                                          &lt;NA&gt;
-## 82                                          &lt;NA&gt;
-## 83                                          &lt;NA&gt;
-## 84                                          &lt;NA&gt;
-## 85                                          &lt;NA&gt;
-## 86                                          &lt;NA&gt;
-## 87                                          &lt;NA&gt;
-## 88                                          &lt;NA&gt;
-## 89                                          &lt;NA&gt;
-## 90                                          &lt;NA&gt;
-## 91                                          &lt;NA&gt;
-## 92                                          &lt;NA&gt;
-## 93                                          &lt;NA&gt;
-## 94                                          &lt;NA&gt;
-## 95                                          &lt;NA&gt;
-## 96                                          &lt;NA&gt;
-## 97                                          &lt;NA&gt;
-## 98                                          &lt;NA&gt;
-## 99                                          &lt;NA&gt;
-## 100                                         &lt;NA&gt;
-## 101                                         &lt;NA&gt;
-## 102                                         &lt;NA&gt;
-## 103                                         &lt;NA&gt;
-## 104                                         &lt;NA&gt;
-## 105                                         &lt;NA&gt;
-## 106                                         &lt;NA&gt;
-## 107                                         &lt;NA&gt;
-## 108                                         &lt;NA&gt;
-## 109                                         &lt;NA&gt;
-## 110                                         &lt;NA&gt;
-## 111                                         &lt;NA&gt;
-## 112                                         &lt;NA&gt;
-## 113                                         &lt;NA&gt;
-## 114                                         &lt;NA&gt;
-## 115                                         &lt;NA&gt;
-## 116                                         &lt;NA&gt;
-## 117                                         &lt;NA&gt;
-## 118                                         &lt;NA&gt;
-## 119                                         &lt;NA&gt;
-## 120                                         &lt;NA&gt;
-## 121                                         &lt;NA&gt;
-## 122                                         &lt;NA&gt;
-## 123                                         &lt;NA&gt;
-## 124                                         &lt;NA&gt;
-## 125                                         &lt;NA&gt;
-## 126                                         &lt;NA&gt;
-## 127                                         &lt;NA&gt;
-## 128                                         &lt;NA&gt;
-## 129                                         &lt;NA&gt;
-## 130                                         &lt;NA&gt;
-## 131                                         &lt;NA&gt;
-## 132                                         &lt;NA&gt;
-## 133                                         &lt;NA&gt;
-## 134                                         &lt;NA&gt;
-## 135                                         &lt;NA&gt;
-## 136                                         &lt;NA&gt;
-## 137                                         &lt;NA&gt;
-## 138                                         &lt;NA&gt;
-## 139                                         &lt;NA&gt;
-## 140                                         &lt;NA&gt;
-## 141                                         &lt;NA&gt;
-## 142                                         &lt;NA&gt;
-## 143                                         &lt;NA&gt;
-## 144                                         &lt;NA&gt;
-## 145                                         &lt;NA&gt;
-## 146                                         &lt;NA&gt;
-## 147                                         &lt;NA&gt;
-## 148                                         &lt;NA&gt;
-## 149                                         &lt;NA&gt;
-## 150                                         &lt;NA&gt;
-## 151                                         &lt;NA&gt;
-## 152                                         &lt;NA&gt;
-## 153                                         &lt;NA&gt;
-## 154                                         &lt;NA&gt;
-## 155                                         &lt;NA&gt;
-## 156                                         &lt;NA&gt;
-## 157                                         &lt;NA&gt;
-## 158                                         &lt;NA&gt;
-## 159                                         &lt;NA&gt;
-## 160                                         &lt;NA&gt;
-## 161                                         &lt;NA&gt;
-## 162                                         &lt;NA&gt;
-## 163                                         &lt;NA&gt;
-## 164                                         &lt;NA&gt;
-## 165                                         &lt;NA&gt;
-## 166                                         &lt;NA&gt;
-## 167                                         &lt;NA&gt;
-## 168                                         &lt;NA&gt;
-## 169                                         &lt;NA&gt;
-## 170                                         &lt;NA&gt;
-## 171                                         &lt;NA&gt;
-## 172                                         &lt;NA&gt;
-## 173                                         &lt;NA&gt;
-## 174                                         &lt;NA&gt;
-## 175                                         &lt;NA&gt;
-## 176                                         &lt;NA&gt;
-## 177                                         &lt;NA&gt;
-## 178                                         &lt;NA&gt;
-## 179                                         &lt;NA&gt;
-## 180                                         &lt;NA&gt;
-## 181                                         &lt;NA&gt;
-## 182                                         &lt;NA&gt;
-## 183                                         &lt;NA&gt;
-## 184                                         &lt;NA&gt;
-## 185                                         &lt;NA&gt;
-## 186                                         &lt;NA&gt;
-## 187                                         &lt;NA&gt;
-## 188                                         &lt;NA&gt;
-## 189                                         &lt;NA&gt;
-## 190                                         &lt;NA&gt;
-## 191                                         &lt;NA&gt;
-## 192                                         &lt;NA&gt;
-## 193                                         &lt;NA&gt;
-## 194                                         &lt;NA&gt;
-## 195                                         &lt;NA&gt;
-## 196                                         &lt;NA&gt;
-## 197                                         &lt;NA&gt;
-## 198                                         &lt;NA&gt;
-## 199                                         &lt;NA&gt;
-## 200                                         &lt;NA&gt;
-## 201                                         &lt;NA&gt;
-## 202                                         &lt;NA&gt;
-## 203                                         &lt;NA&gt;
-## 204                                         &lt;NA&gt;
-## 205                                         &lt;NA&gt;
-## 206                                         &lt;NA&gt;
-## 207                                         &lt;NA&gt;
-## 208                                         &lt;NA&gt;
-## 209                                         &lt;NA&gt;
-## 210                                         &lt;NA&gt;
-## 211                                         &lt;NA&gt;
-## 212                                         &lt;NA&gt;
-## 213                                         &lt;NA&gt;
-## 214                                         &lt;NA&gt;
-## 215                                         &lt;NA&gt;
-## 216                                         &lt;NA&gt;
-## 217                                         &lt;NA&gt;
-## 218                                         &lt;NA&gt;
-## 219                                         &lt;NA&gt;
-## 220                                         &lt;NA&gt;
-## 221                                         &lt;NA&gt;
-## 222                                         &lt;NA&gt;
-## 223                                         &lt;NA&gt;
-## 224                                         &lt;NA&gt;
-## 225                                         &lt;NA&gt;
-## 226                                         &lt;NA&gt;
-## 227                                         &lt;NA&gt;
-## 228                                         &lt;NA&gt;
-## 229                                         &lt;NA&gt;
-## 230                                         &lt;NA&gt;
-## 231                                         &lt;NA&gt;
-## 232                                         &lt;NA&gt;
-## 233                                         &lt;NA&gt;
-## 234                                         &lt;NA&gt;
-## 235                                         &lt;NA&gt;
-## 236                                         &lt;NA&gt;
-## 237                                         &lt;NA&gt;
-## 238                                         &lt;NA&gt;
-## 239                                         &lt;NA&gt;
-## 240                                         &lt;NA&gt;
-## 241                                         &lt;NA&gt;
-## 242                                         &lt;NA&gt;
-## 243                                         &lt;NA&gt;
-## 244                                New Brunswick
-## 245                                New Caledonia
-## 246                              New South Wales
-## 247                    Newfoundland and Labrador
-## 248                                      Ningxia
-## 249                                         Niue
-## 250                           Northern Territory
-## 251                        Northwest Territories
-## 252                                  Nova Scotia
-## 253                                      Nunavut
-## 254                                      Ontario
-## 255                             Pitcairn Islands
-## 256                         Prince Edward Island
-## 257                                      Qinghai
-## 258                                       Quebec
-## 259                                   Queensland
-## 260                                      Reunion
-## 261                             Saint Barthelemy
-## 262 Saint Helena, Ascension and Tristan da Cunha
-## 263                    Saint Pierre and Miquelon
-## 264                                 Saskatchewan
-## 265                                      Shaanxi
-## 266                                     Shandong
-## 267                                     Shanghai
-## 268                                       Shanxi
-## 269                                      Sichuan
-## 270                                 Sint Maarten
-## 271                              South Australia
-## 272                                    St Martin
-## 273                                     Tasmania
-## 274                                      Tianjin
-## 275                                        Tibet
-## 276                     Turks and Caicos Islands
-## 277                                     Victoria
-## 278                            Wallis and Futuna
-## 279                            Western Australia
-## 280                                     Xinjiang
-## 281                                        Yukon
-## 282                                       Yunnan
-## 283                                     Zhejiang
-##                       Country.Region X3.9.23.x X3.9.23.y   risk_score
-## 1                             Canada    629269      5622 8.934176e-01
-## 2                     United Kingdom      3904        12 3.073770e-01
-## 3                              China      2275         7 3.076923e-01
-## 4                        Netherlands     44044       282 6.402688e-01
-## 5                          Australia    232974       228 9.786500e-02
-## 6                              China     40774        20 4.905087e-02
-## 7                     United Kingdom     18828       160 8.497982e-01
-## 8                        Netherlands     11804        41 3.473399e-01
-## 9                             Canada    396817      5249 1.322776e+00
-## 10                    United Kingdom      7305        64 8.761123e-01
-## 11                    United Kingdom     31472        37 1.175648e-01
-## 12                    United Kingdom         0         0          NaN
-## 13                             China     14715        11 7.475365e-02
-## 14                       New Zealand      7031         2 2.844546e-02
-## 15                       Netherlands     45986       301 6.545470e-01
-## 16                    United Kingdom      1930         0 0.000000e+00
-## 17                           Denmark     34658        28 8.078943e-02
-## 18                            France     98041       413 4.212523e-01
-## 19                            France     78055       649 8.314650e-01
-## 20                             China     17122         2 1.168088e-02
-## 21                             China      1742         2 1.148106e-01
-## 22                    United Kingdom     20433       111 5.432389e-01
-## 23                           Denmark     11971        21 1.754239e-01
-## 24                            France    201886      1010 5.002823e-01
-## 25                             China    103248        10 9.685418e-03
-## 26                             China     13371         2 1.495774e-02
-## 27                    United Kingdom     34991        66 1.886199e-01
-## 28                             China      2534         2 7.892660e-02
-## 29                             China     10483         6 5.723552e-02
-## 30                             China      3292         7 2.126367e-01
-## 31                             China      6603        18 2.726034e-01
-## 32                             China      9948        23 2.312023e-01
-## 33                             China   2876106     13467 4.682373e-01
-## 34                             China     72131      4515 6.259445e+00
-## 35                             China      7437         4 5.378513e-02
-## 36                             China      8847         1 1.130327e-02
-## 37                    United Kingdom     38008       116 3.051989e-01
-## 38                    United Kingdom     66391       161 2.425027e-01
-## 39                             China      5075         0 0.000000e+00
-## 40                             China      3423         2 5.842828e-02
-## 41                             China     40764         5 1.226572e-02
-## 42                             China      3547         2 5.638568e-02
-## 43                             China      3514       121 3.443369e+00
-## 44                            Canada    154712      2464 1.592637e+00
-## 45                            France    229020      1092 4.768143e-01
-## 46                            France     42004       187 4.451957e-01
-## 47                    United Kingdom      1403         8 5.702067e-01
-## 48                       Afghanistan    209451      7896 3.769855e+00
-## 49                           Albania    334457      3598 1.075774e+00
-## 50                           Algeria    271496      6881 2.534476e+00
-## 51                           Andorra     47890       165 3.445396e-01
-## 52                            Angola    105288      1933 1.835917e+00
-## 53                        Antarctica        11         0 0.000000e+00
-## 54               Antigua and Barbuda      9106       146 1.603338e+00
-## 55                         Argentina  10044957    130472 1.298881e+00
-## 56                           Armenia    447308      8727 1.951005e+00
-## 57                           Austria   5961143     21970 3.685535e-01
-## 58                        Azerbaijan    828825     10138 1.223177e+00
-## 59                           Bahamas     37491       833 2.221867e+00
-## 60                           Bahrain    710693      1553 2.185191e-01
-## 61                        Bangladesh   2037871     29445 1.444890e+00
-## 62                          Barbados    106798       579 5.421450e-01
-## 63                           Belarus    994037      7118 7.160699e-01
-## 64                           Belgium   4739365     33814 7.134711e-01
-## 65                            Belize     70757       688 9.723420e-01
-## 66                             Benin     27999       163 5.821636e-01
-## 67                            Bhutan     62627        21 3.353186e-02
-## 68                           Bolivia   1194277     22365 1.872681e+00
-## 69            Bosnia and Herzegovina    401729     16280 4.052483e+00
-## 70                          Botswana    329758      2801 8.494108e-01
-## 71                            Brazil  37076053    699276 1.886058e+00
-## 72                            Brunei    279661       225 8.045455e-02
-## 73                          Bulgaria   1297523     38228 2.946229e+00
-## 74                      Burkina Faso     22056       396 1.795430e+00
-## 75                             Burma    633950     19490 3.074375e+00
-## 76                           Burundi     53631        38 7.085454e-02
-## 77                        Cabo Verde     63244       413 6.530264e-01
-## 78                          Cambodia    138719      3056 2.203015e+00
-## 79                          Cameroon    124392      1965 1.579684e+00
-## 80          Central African Republic     15368       113 7.352941e-01
-## 81                              Chad      7679       194 2.526371e+00
-## 82                             Chile   5192286     64273 1.237856e+00
-## 83                          Colombia   6359093    142339 2.238354e+00
-## 84                           Comoros      9008       161 1.787300e+00
-## 85               Congo (Brazzaville)     25087       388 1.546618e+00
-## 86                  Congo (Kinshasa)     95749      1464 1.528998e+00
-## 87                        Costa Rica   1209725      9245 7.642233e-01
-## 88                     Cote d&#39;Ivoire     88263       834 9.449033e-01
-## 89                           Croatia   1269326     17987 1.417051e+00
-## 90                              Cuba   1112643      8530 7.666430e-01
-## 91                            Cyprus    650685      1330 2.044000e-01
-## 92                           Czechia   4618256     42491 9.200659e-01
-## 93                           Denmark   3404407      8296 2.436841e-01
-## 94                          Djibouti     15690       189 1.204589e+00
-## 95                          Dominica     15760        74 4.695431e-01
-## 96                Dominican Republic    660790      4384 6.634483e-01
-## 97                           Ecuador   1057121     36014 3.406800e+00
-## 98                             Egypt    515759     24812 4.810774e+00
-## 99                       El Salvador    201785      4230 2.096291e+00
-## 100                Equatorial Guinea     17229       183 1.062163e+00
-## 101                          Eritrea     10189       103 1.010894e+00
-## 102                          Estonia    615433      2946 4.786874e-01
-## 103                         Eswatini     74267      1425 1.918753e+00
-## 104                         Ethiopia    500116      7572 1.514049e+00
-## 105                             Fiji     68898       883 1.281605e+00
-## 106                          Finland   1463644      8967 6.126490e-01
-## 107                           France  38618509    161512 4.182243e-01
-## 108                            Gabon     48981       306 6.247320e-01
-## 109                           Gambia     12598       372 2.952850e+00
-## 110                          Georgia   1827537     16971 9.286269e-01
-## 111                          Germany  38249060    168935 4.416710e-01
-## 112                            Ghana    171229      1462 8.538273e-01
-## 113                           Greece   5548487     34779 6.268195e-01
-## 114                          Grenada     19680       238 1.209350e+00
-## 115                        Guatemala   1238247     20182 1.629885e+00
-## 116                           Guinea     38267       467 1.220373e+00
-## 117                    Guinea-Bissau      8960       176 1.964286e+00
-## 118                           Guyana     73075      1298 1.776257e+00
-## 119                            Haiti     34202       860 2.514473e+00
-## 120                         Holy See        29         0 0.000000e+00
-## 121                         Honduras    472250     11111 2.352779e+00
-## 122                          Hungary   2196804     48762 2.219679e+00
-## 123                          Iceland    209137       263 1.257549e-01
-## 124                            India  44690738    530779 1.187671e+00
-## 125                        Indonesia   6738225    160941 2.388478e+00
-## 126                             Iran   7572311    144933 1.913986e+00
-## 127                             Iraq   2465545     25375 1.029184e+00
-## 128                          Ireland   1704502      8708 5.108824e-01
-## 129                           Israel   4803824     12329 2.566497e-01
-## 130                            Italy  25603510    188322 7.355320e-01
-## 131                          Jamaica    154416      3514 2.275671e+00
-## 132                            Japan  33320438     72997 2.190758e-01
-## 133                           Jordan   1746997     14122 8.083586e-01
-## 134                       Kazakhstan   1498668     19071 1.272530e+00
-## 135                            Kenya    342937      5688 1.658614e+00
-## 136                         Kiribati      5014        18 3.589948e-01
-## 137                     Korea, North         1         6 6.000000e+02
-## 138                     Korea, South  30615522     34093 1.113585e-01
-## 139                           Kosovo    273312      3211 1.174848e+00
-## 140                           Kuwait    663860      2570 3.871298e-01
-## 141                       Kyrgyzstan    206708      2991 1.446969e+00
-## 142                             Laos    218023       758 3.476697e-01
-## 143                           Latvia    976255      6269 6.421478e-01
-## 144                          Lebanon   1232828     10841 8.793603e-01
-## 145                          Lesotho     34790       723 2.078183e+00
-## 146                          Liberia      8090       295 3.646477e+00
-## 147                            Libya    507187      6437 1.269157e+00
-## 148                    Liechtenstein     21432        89 4.152669e-01
-## 149                        Lithuania   1307448      9596 7.339489e-01
-## 150                       Luxembourg    317367      1220 3.844130e-01
-## 151                       Madagascar     67889      1423 2.096069e+00
-## 152                           Malawi     88707      2686 3.027946e+00
-## 153                         Malaysia   5044718     36967 7.327863e-01
-## 154                         Maldives    185738       311 1.674402e-01
-## 155                             Mali     33062       743 2.247293e+00
-## 156                            Malta    117610       828 7.040218e-01
-## 157                 Marshall Islands     15649        17 1.086331e-01
-## 158                       Mauritania     63668       997 1.565936e+00
-## 159                        Mauritius    296042      1044 3.526527e-01
-## 160                           Mexico   7483444    333188 4.452335e+00
-## 161                       Micronesia     23948        61 2.547186e-01
-## 162                          Moldova    611140     12003 1.964034e+00
-## 163                           Monaco     16121        67 4.156070e-01
-## 164                         Mongolia   1007900      2136 2.119258e-01
-## 165                       Montenegro    288808      2808 9.722722e-01
-## 166                          Morocco   1272490     16296 1.280639e+00
-## 167                       Mozambique    233214      2242 9.613488e-01
-## 168                          Namibia    171156      4090 2.389633e+00
-## 169                            Nauru      5247         1 1.905851e-02
-## 170                            Nepal   1001154     12020 1.200614e+00
-## 171                      Netherlands   8599981     22990 2.673262e-01
-## 172                      New Zealand   2228291      2548 1.143477e-01
-## 173                        Nicaragua     15655       245 1.564995e+00
-## 174                            Niger      9508       315 3.313000e+00
-## 175                          Nigeria    266598      3155 1.183430e+00
-## 176                  North Macedonia    346852      9662 2.785626e+00
-## 177                           Norway   1479506      5213 3.523473e-01
-## 178                             Oman    399449      4628 1.158596e+00
-## 179                         Pakistan   1577411     30644 1.942677e+00
-## 180                            Palau      5991         9 1.502253e-01
-## 181                           Panama   1031731      8609 8.344229e-01
-## 182                 Papua New Guinea     46825       670 1.430860e+00
-## 183                         Paraguay    808401     19878 2.458928e+00
-## 184                             Peru   4487553    219539 4.892176e+00
-## 185                      Philippines   4077452     66188 1.623269e+00
-## 186                           Poland   6444960    119010 1.846559e+00
-## 187                         Portugal   5570473     26266 4.715219e-01
-## 188                            Qatar    495090       688 1.389646e-01
-## 189                          Romania   3346046     67736 2.024359e+00
-## 190                           Russia  22075858    388478 1.759741e+00
-## 191                           Rwanda    133194      1468 1.102152e+00
-## 192            Saint Kitts and Nevis      6597        47 7.124451e-01
-## 193                      Saint Lucia     30004       409 1.363152e+00
-## 194 Saint Vincent and the Grenadines      9589       123 1.282720e+00
-## 195                            Samoa     16607        29 1.746252e-01
-## 196                       San Marino     23616       122 5.165989e-01
-## 197            Sao Tome and Principe      6281        77 1.225919e+00
-## 198                     Saudi Arabia    830127      9618 1.158618e+00
-## 199                          Senegal     88926      1971 2.216450e+00
-## 200                           Serbia   2500142     17881 7.151994e-01
-## 201                       Seychelles     50665       172 3.394849e-01
-## 202                     Sierra Leone      7760       126 1.623711e+00
-## 203                        Singapore   2235294      1722 7.703685e-02
-## 204                         Slovakia   2667551     21035 7.885510e-01
-## 205                         Slovenia   1331707      7078 5.314983e-01
-## 206                  Solomon Islands     24575       153 6.225839e-01
-## 207                          Somalia     27324      1361 4.980969e+00
-## 208                     South Africa   4067067    102595 2.522580e+00
-## 209                      South Sudan     18368       138 7.513066e-01
-## 210                            Spain  13770429    119479 8.676491e-01
-## 211                        Sri Lanka    672039     16830 2.504319e+00
-## 212                            Sudan     63829      5017 7.860064e+00
-## 213             Summer Olympics 2020       865         0 0.000000e+00
-## 214                         Suriname     82467      1404 1.702499e+00
-## 215                           Sweden   2699339     23777 8.808453e-01
-## 216                      Switzerland   4413911     14210 3.219367e-01
-## 217                            Syria     57467      3164 5.505769e+00
-## 218                          Taiwan*   9970937     17672 1.772351e-01
-## 219                       Tajikistan     17786       125 7.028000e-01
-## 220                         Tanzania     42906       846 1.971752e+00
-## 221                         Thailand   4728182     33918 7.173582e-01
-## 222                      Timor-Leste     23419       138 5.892651e-01
-## 223                             Togo     39396       290 7.361153e-01
-## 224                            Tonga     16810        13 7.733492e-02
-## 225              Trinidad and Tobago    189918      4355 2.293095e+00
-## 226                          Tunisia   1151126     29341 2.548896e+00
-## 227                           Turkey  17042722    101492 5.955152e-01
-## 228                           Tuvalu      2805         0 0.000000e+00
-## 229                           Uganda    170544      3630 2.128483e+00
-## 230                          Ukraine   5711929    119283 2.088314e+00
-## 231             United Arab Emirates   1053213      2349 2.230318e-01
-## 232                   United Kingdom  24425309    219948 9.004922e-01
-## 233                          Uruguay   1034303      7617 7.364380e-01
-## 234                               US 103802702   1123836 1.082665e+00
-## 235                       Uzbekistan    251247      1637 6.515501e-01
-## 236                          Vanuatu     12014        14 1.165307e-01
-## 237                        Venezuela    552162      5854 1.060196e+00
-## 238                          Vietnam  11526994     43186 3.746510e-01
-## 239               West Bank and Gaza    703228      5708 8.116855e-01
-## 240             Winter Olympics 2022       535         0 0.000000e+00
-## 241                            Yemen     11945      2159 1.807451e+01
-## 242                           Zambia    343135      4057 1.182333e+00
-## 243                         Zimbabwe    264276      5671 2.145863e+00
-## 244                           Canada     88866       834 9.384917e-01
-## 245                           France     80017       314 3.924166e-01
-## 246                        Australia   3915992      6529 1.667266e-01
-## 247                           Canada     54757       318 5.807477e-01
-## 248                            China      1276         0 0.000000e+00
-## 249                      New Zealand       792         0 0.000000e+00
-## 250                        Australia    105111        91 8.657514e-02
-## 251                           Canada     11511        22 1.911215e-01
-## 252                           Canada    140793       794 5.639485e-01
-## 253                           Canada      3531         7 1.982441e-01
-## 254                           Canada   1601325     16234 1.013785e+00
-## 255                   United Kingdom         4         0 0.000000e+00
-## 256                           Canada     56523        93 1.645348e-01
-## 257                            China       782         0 0.000000e+00
-## 258                           Canada   1320325     18160 1.375419e+00
-## 259                        Australia   1800236      2783 1.545908e-01
-## 260                           France    494595       921 1.862130e-01
-## 261                           France      5441         6 1.102738e-01
-## 262                   United Kingdom      2166         0 0.000000e+00
-## 263                           France      3452         2 5.793743e-02
-## 264                           Canada    153651      1890 1.230060e+00
-## 265                            China      7326         5 6.825007e-02
-## 266                            China      5880        10 1.700680e-01
-## 267                            China     67040       595 8.875298e-01
-## 268                            China      7167         1 1.395284e-02
-## 269                            China     14567        12 8.237798e-02
-## 270                      Netherlands     11020        91 8.257713e-01
-## 271                        Australia    883620      1365 1.544782e-01
-## 272                           France     12271        63 5.134056e-01
-## 273                        Australia    287507       256 8.904131e-02
-## 274                            China      4392         3 6.830601e-02
-## 275                            China      1647         0 0.000000e+00
-## 276                   United Kingdom      6561        38 5.791800e-01
-## 277                        Australia   2880559      7370 2.558531e-01
-## 278                           France      3427         7 2.042603e-01
-## 279                        Australia   1293461       952 7.360098e-02
-## 280                            China      3089         3 9.711881e-02
-## 281                           Canada      4989        32 6.414111e-01
-## 282                            China      9743         4 4.105512e-02
-## 283                            China     11848         1 8.440243e-03</code></pre>
-<pre class="r"><code>head(merged_df)</code></pre>
-<pre><code>##                 Province.State Country.Region X3.9.23.x X3.9.23.y
-## 1                      Alberta         Canada    629269      5622
-## 2                     Anguilla United Kingdom      3904        12
-## 3                        Anhui          China      2275         7
-## 4                        Aruba    Netherlands     44044       282
-## 5 Australian Capital Territory      Australia    232974       228
-## 6                      Beijing          China     40774        20</code></pre>
-<pre><code># Find the minimum risk score across all provinces for the most recent date
-min_risk_score_latest &lt;- min(risk_scores_latest, na.rm = TRUE)
-print(min_risk_score_latest)
 
-#Find the provinces with the minimum risk score for the most recent date
-min_risk_provinces &lt;- risk_scores_latest
-head( min_risk_provinces)</code></pre>
+# Add risk scores to the end of the dataframe as a new column
+merged_df &lt;- mutate(merged_df, risk_score = risk_scores_latest)
+head(merged_df)</code></pre>
+<pre><code>##                 Province.State Country.Region X3.9.23.x X3.9.23.y risk_score
+## 1                      Alberta         Canada    629269      5622 0.89341760
+## 2                     Anguilla United Kingdom      3904        12 0.30737705
+## 3                        Anhui          China      2275         7 0.30769231
+## 4                        Aruba    Netherlands     44044       282 0.64026882
+## 5 Australian Capital Territory      Australia    232974       228 0.09786500
+## 6                      Beijing          China     40774        20 0.04905087</code></pre>
+<pre class="r"><code>lowest_risk_highest_cases &lt;- merged_df %&gt;%
+  filter(risk_score == min(risk_score[!is.na(risk_score)])) %&gt;%
+  filter(ncol(cases_df) == max(ncol(cases_df)))
+
+# Print the results
+print(lowest_risk_highest_cases)</code></pre>
+<pre><code>##                                  Province.State       Country.Region X3.9.23.x
+## 1                   Falkland Islands (Malvinas)       United Kingdom      1930
+## 2                                       Jiangsu                China      5075
+## 3                                          &lt;NA&gt;           Antarctica        11
+## 4                                          &lt;NA&gt;             Holy See        29
+## 5                                          &lt;NA&gt; Summer Olympics 2020       865
+## 6                                          &lt;NA&gt;               Tuvalu      2805
+## 7                                          &lt;NA&gt; Winter Olympics 2022       535
+## 8                                       Ningxia                China      1276
+## 9                                          Niue          New Zealand       792
+## 10                             Pitcairn Islands       United Kingdom         4
+## 11                                      Qinghai                China       782
+## 12 Saint Helena, Ascension and Tristan da Cunha       United Kingdom      2166
+## 13                                        Tibet                China      1647
+##    X3.9.23.y risk_score
+## 1          0          0
+## 2          0          0
+## 3          0          0
+## 4          0          0
+## 5          0          0
+## 6          0          0
+## 7          0          0
+## 8          0          0
+## 9          0          0
+## 10         0          0
+## 11         0          0
+## 12         0          0
+## 13         0          0</code></pre>
+</div>
+<div id="objective-4.2" class="section level4">
+<h4>Objective 4.2</h4>
 </div>
 </div>
-<<<<<<< HEAD
 <div id="objective-5" class="section level3">
 <h3>Objective 5</h3>
 <pre class="r"><code># creates a list of all countries by subsetting the country column of the dataset
@@ -1338,56 +786,26 @@ United Kingdom
 <h3>GitHub Log</h3>
 <pre class="bash"><code>git log --pretty=format:&quot;%nSubject: %s%nAuthor: %aN%nDate: %aD%nBody: %b&quot;</code></pre>
 <pre><code>## 
-## Subject: added comments for ob5
-## Author: PreenaM
-## Date: Sun, 9 Apr 2023 21:58:52 -0700
+## Subject: edits
+## Author: Morgan
+## Date: Sun, 9 Apr 2023 22:53:15 -0700
 ## Body: 
 ## 
-## Subject: added comments for ob3
-## Author: PreenaM
-## Date: Sun, 9 Apr 2023 21:52:56 -0700
+## Subject: new merged table for risk scores
+## Author: Morgan
+## Date: Sun, 9 Apr 2023 22:51:17 -0700
 ## Body: 
 ## 
-## Subject: completed Objective 5 &amp; displayed both tables successfully, but comments pending
+## Subject: resolving merge conflict hopefully?
 ## Author: PreenaM
-## Date: Sun, 9 Apr 2023 21:44:11 -0700
+## Date: Sun, 9 Apr 2023 22:23:19 -0700
 ## Body: 
 ## 
-=======
-</div>
-<div id="where-im-stuck" class="section level1">
-<h1>Where I’m stuck</h1>
-<pre><code># Filter cases_df to only include the provinces with the minimum risk score for the most recent date
-min_risk_cases_latest &lt;- cases_df[, c(1:4, min_risk_provinces_latest, most_recent_date)]</code></pre>
-</div>
-<div id="find-the-province-with-the-most-confirmed-cases-among-those-with-the-minimum-risk-score-for-the-most-recent-date" class="section level1">
-<h1>Find the province with the most confirmed cases among those with the
-minimum risk score for the most recent date</h1>
-<p>max_cases_province_latest &lt;-
-min_risk_cases_latest[which.max(min_risk_cases_latest[,
-ncol(min_risk_cases_latest) - 1]), “Province.State”]</p>
-</div>
-<div id="extract-the-confirmed-cases-number-for-the-province-with-the-lowest-risk-score-and-the-most-confirmed-cases-for-the-most-recent-date" class="section level1">
-<h1>Extract the confirmed cases number for the province with the lowest
-risk score and the most confirmed cases for the most recent date</h1>
-<p>max_cases_confirmed_latest &lt;-
-min_risk_cases_latest[which(min_risk_cases_latest[, “Province.State”] ==
-max_cases_province_latest), most_recent_date]</p>
-</div>
-<div id="output-the-result" class="section level1">
-<h1>Output the result</h1>
-<p>paste(“The province with the lowest risk score and the most confirmed
-cases on”, most_recent_date, “is”, max_cases_province_latest.”)</p>
-<pre><code>
-#### Objective 4.2
-
-
-### GitHub Log
-
-```bash
-git log --pretty=format:&quot;%nSubject: %s%nAuthor: %aN%nDate: %aD%nBody: %b&quot;</code></pre>
-<pre><code>## 
-<<<<<<< HEAD
+## Subject: generated new reports
+## Author: PreenaM
+## Date: Sun, 9 Apr 2023 22:11:33 -0700
+## Body: 
+## 
 ## Subject: test
 ## Author: Morgan
 ## Date: Sun, 9 Apr 2023 22:08:15 -0700
@@ -1418,9 +836,6 @@ git log --pretty=format:&quot;%nSubject: %s%nAuthor: %aN%nDate: %aD%nBody: %b&qu
 ## Date: Sun, 9 Apr 2023 21:44:11 -0700
 ## Body: 
 ## 
-=======
->>>>>>> 0c91167233250f50707d3257baf0149c88ea5371
->>>>>>> acc5ccea2a25942a82b7dcc157b01e2d852879eb
 ## Subject: updated ob1 to province instead of country
 ## Author: Morgan
 ## Date: Sun, 9 Apr 2023 20:10:43 -0700
@@ -1485,6 +900,7 @@ git log --pretty=format:&quot;%nSubject: %s%nAuthor: %aN%nDate: %aD%nBody: %b&qu
 ## Author: PreenaM
 ## Date: Sun, 9 Apr 2023 10:34:23 -0700
 ## Body:</code></pre>
+</div>
 </div>
 
 
