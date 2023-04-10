@@ -523,7 +523,7 @@ head(merged_df)</code></pre>
 ## 4                        Aruba    Netherlands     44044       282 0.64026882
 ## 5 Australian Capital Territory      Australia    232974       228 0.09786500
 ## 6                      Beijing          China     40774        20 0.04905087</code></pre>
-<pre class="r"><code># 
+<pre class="r"><code># Find the lowest risk regions
 lowest_risk_highest_cases &lt;- merged_df %&gt;%
   filter(risk_score == min(risk_score[!is.na(risk_score)])) %&gt;%
   filter(ncol(cases_df) == max(ncol(cases_df)))
@@ -563,6 +563,21 @@ print(lowest_risk_highest_cases)</code></pre>
   pull(Province.State)
 print(lowest_risk_province)</code></pre>
 <pre><code>## [1] &quot;Jiangsu&quot;</code></pre>
+<pre class="r"><code>#Now for the Highest Risk region
+# Find the highest risk regions
+highest_risk_highest_cases &lt;- merged_df %&gt;%
+  filter(risk_score == max(risk_score[!is.na(risk_score)])) %&gt;%
+  filter(ncol(cases_df) == max(ncol(cases_df)))
+
+# Print the lowest risk table
+print(highest_risk_highest_cases)</code></pre>
+<pre><code>##   Province.State Country.Region X3.9.23.x X3.9.23.y risk_score
+## 1           &lt;NA&gt;   Korea, North         1         6        600</code></pre>
+<pre class="r"><code>highest_risk_province &lt;- highest_risk_highest_cases %&gt;%
+  filter(X3.9.23.x == max(X3.9.23.x)) %&gt;%
+  pull(Country.Region)
+print(highest_risk_province)</code></pre>
+<pre><code>## [1] &quot;Korea, North&quot;</code></pre>
 </div>
 <div id="objective-4.2" class="section level4">
 <h4>Objective 4.2</h4>
@@ -792,6 +807,11 @@ United Kingdom
 <h3>GitHub Log</h3>
 <pre class="bash"><code>git log --pretty=format:&quot;%nSubject: %s%nAuthor: %aN%nDate: %aD%nBody: %b&quot;</code></pre>
 <pre><code>## 
+## Subject: lowest risk province
+## Author: Morgan
+## Date: Sun, 9 Apr 2023 23:13:37 -0700
+## Body: 
+## 
 ## Subject: lowest risk highest cases table
 ## Author: Morgan
 ## Date: Sun, 9 Apr 2023 23:07:48 -0700
