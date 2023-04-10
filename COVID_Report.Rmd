@@ -95,7 +95,7 @@ deaths_df <- read.csv(covid_deaths, header = TRUE, na.strings = c("", " "))
 
 ```{r ob2}
 
-# iterates through each column that contains a date
+# iterates through each (date-containing) column 
 for(date_column in (5:ncol(cases_df))){
   
   # iterates through each row (case count) for that specific date
@@ -112,6 +112,27 @@ cat("The most recent area to have a first confirmed case is", newest_case)
 
 ### Objective 3
 ```{r ob3}
+recent_region <- "Korea, North"
+origin_city <- "Hubei"
+origin_country <- "China"
+
+origin_lat = cases_df[which(cases_df$Province.State == origin_city), 3]
+origin_long = cases_df[which(cases_df$Province.State == origin_city), 4]
+origin_coordinates <- c(origin_long, origin_lat)
+
+
+recent_lat = cases_df[which(cases_df$Country.Region == recent_region), 3]
+recent_long = cases_df[which(cases_df$Country.Region == recent_region), 4]
+recent_coordinates <- c(recent_long, recent_lat)
+
+distance = distm(origin_coordinates, recent_coordinates, fun=distGeo)
+miles_distance = distance/1609
+
+sprintf("%s is %f miles away from %s, %s", recent_region, miles_distance, origin_city, origin_country)
+
+
+
+
 ```
 
 ### Objective 4
