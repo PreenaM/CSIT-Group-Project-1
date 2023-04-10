@@ -2,28 +2,25 @@
 title: "Project 1"
 author: "Name:  \n Partner: "
 date: "`r Sys.Date()`"
-output:
-  pdf_document:
-    toc: yes
-    toc_depth: '3'
+output: 
   html_document:
-    toc: yes
+    toc: true
     toc_depth: 3
 header-includes:
-- \usepackage{booktabs}
-- \usepackage{longtable}
-- \usepackage{array}
-- \usepackage{multirow}
-- \usepackage{wrapfig}
-- \usepackage{float}
-- \usepackage{colortbl}
-- \usepackage{pdflscape}
-- \usepackage{tabu}
-- \usepackage{threeparttable}
-- \usepackage{threeparttablex}
-- \usepackage[normalem]{ulem}
-- \usepackage{makecell}
-- \usepackage{xcolor}
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{array}
+  - \usepackage{multirow}
+  - \usepackage{wrapfig}
+  - \usepackage{float}
+  - \usepackage{colortbl}
+  - \usepackage{pdflscape}
+  - \usepackage{tabu}
+  - \usepackage{threeparttable}
+  - \usepackage{threeparttablex}
+  - \usepackage[normalem]{ulem}
+  - \usepackage{makecell}
+  - \usepackage{xcolor}
 ---
 ```{r setup, include = FALSE}
 #### Load necessary packages ####
@@ -112,31 +109,24 @@ cat("The most recent area to have a first confirmed case is", newest_case)
 
 ```
 
-### Objective 3: How far away are the areas from objective 2 from where the first confirmed case(s) occurred? 
+### Objective 3
 ```{r ob3}
-# assigns correct values to origin country and recent country variables using output from ob1 and ob2
-recent_region <- newest_case
-origin_city <- max_cases
+recent_region <- "Korea, North"
+origin_city <- "Hubei"
 origin_country <- "China"
 
-# subsets the lat and long values, using the row number that corresponds to the origin country
 origin_lat = cases_df[which(cases_df$Province.State == origin_city), 3]
 origin_long = cases_df[which(cases_df$Province.State == origin_city), 4]
-# creates a list of (longitude, latitude) -> the correct input format for distm
 origin_coordinates <- c(origin_long, origin_lat)
 
-# subsets the lat and long values, using the row number that corresponds to the most recent country
+
 recent_lat = cases_df[which(cases_df$Country.Region == recent_region), 3]
 recent_long = cases_df[which(cases_df$Country.Region == recent_region), 4]
-# creates a list of (longitude, latitude) -> the correct input format for distm
 recent_coordinates <- c(recent_long, recent_lat)
 
-# calculates distance between coordinates using distm
 distance = distm(origin_coordinates, recent_coordinates, fun=distGeo)
-# converts dist in meters to miles using conversion factor
 miles_distance = distance/1609
 
-# prints distance between two locations in a sentence using values from above
 sprintf("%s is %f miles away from %s, %s", recent_region, miles_distance, origin_city, origin_country)
 
 
@@ -173,125 +163,20 @@ risk_scores_latest <- as.numeric(as.matrix(risk_scores_latest))
 min_risk_score_latest <- min(risk_scores_latest, na.rm = TRUE)
 print(min_risk_score_latest)
 ```
-# Find the provinces with the minimum risk score for the most recent date
+# Where I'm stuck
+```
+Find the provinces with the minimum risk score for the most recent date
 min_risk_provinces_latest <- colnames(risk_scores_latest)[which(risk_scores_latest == min_risk_score_latest, arr.ind = TRUE)[, "col"]]
 head( min_risk_provinces_latest)
 
-# Filter cases_df to only include the provinces with the minimum risk score for the most recent date
-min_risk_cases_latest <- cases_df[, c(1:4, min_risk_provinces_latest, most_recent_date)]
-
-# Find the province with the most confirmed cases among those with the minimum risk score for the most recent date
-max_cases_province_latest <- min_risk_cases_latest[which.max(min_risk_cases_latest[, ncol(min_risk_cases_latest) - 1]), "Province.State"]
-
-# Extract the confirmed cases number for the province with the lowest risk score and the most confirmed cases for the most recent date
-max_cases_confirmed_latest <- min_risk_cases_latest[which(min_risk_cases_latest[, "Province.State"] == max_cases_province_latest), most_recent_date]
 
 # Output the result
-paste("The province with the lowest risk score and the most confirmed cases on", most_recent_date, "is", max_cases_province_latest, "with a risk score of", min_risk_score_latest, "and", max_cases_confirmed_latest, "confirmed cases.")
-
-
-
-```
-```
-# Store location columns in separate variables
-location_cols_cases <- cases_df[, 1:4]
-location_cols_deaths <- deaths_df[, 1:4]
-
-# Remove location columns from data frames
-cases_df <- cases_df[, -c(1:4)]
-deaths_df <- deaths_df[, -c(1:4)]
-
-# Calculate risk scores
-risk_scores <- deaths_df / cases_df * 100
-
-# Add location columns back to risk_scores data frame
-risk_scores <- cbind(location_cols_deaths, risk_scores)
-
-# Calculate risk scores
-risk_scores <- deaths_df[, -c(1:4)] / cases_df[, -c(1:4)] * 100
-
-# Find the minimum risk score across all provinces
-min_risk_score <- min(risk_scores, na.rm = TRUE)
-print(min_risk_score)
-
-min_risk <- which(risk_scores == min_risk_score)
-min_risk_provinces <- risk_scores$Province.State[min_risk]
-print(min_risk_provinces)
-
-# Find the provinces with the minimum risk score
-min_risk_provinces <- colnames(risk_scores)[which(risk_scores == min_risk_score, arr.ind = TRUE)[, "col"]]
-
-# Filter cases_df to only include the provinces with the minimum risk score
-min_risk_cases <- cases_df[, c(1:4, min_risk_provinces)]
-
-# Find the province with the most confirmed cases among those with the minimum risk score
-max_cases_province <- min_risk_cases[which.max(min_risk_cases[, ncol(min_risk_cases)]), "Province.State"]
-
-# Output the result
-paste("The province with the lowest risk score and the most confirmed cases is", max_cases_province, "with a risk score of", min_risk_score)
-
+paste("The province with the lowest risk score and the most confirmed cases on", most_recent_date, "is", max_cases_province_latest.")
 
 ```
 
 #### Objective 4.2
 ```{r ob4.2}
-```
-
-### Objective 5
-```{r ob5}
-# creates a list of all countries by subsetting the country column of the dataset
-countries <- cases_df$Country.Region
-# removes duplicates (due to multiple provinces)
-countries <- unique(countries)
-
-deaths = 0
-cases = 0
-
-# initialization of empty lists
-country_cases <- c()
-country_deaths <- c()
-
-# iterates through each unique country
-for(country in countries){
-  # creates a list of the indexes of every time the country appears 
-  country_duplicates <- which(cases_df$Country.Region == country)
-  # iterates through each of the duplicate indexes (each province of that country)
-  for(dup in country_duplicates){
-    # adds the cases for that province to the total count for the country
-    cases <- cases + cases_df[dup, 1147]
-  }
-  # appends the total case count for that country to the country_cases list
-  country_cases <- append(country_cases, cases)
-  # resets case count to 0 before moving on to the next country in the list
-  cases = 0
-}
-
-# repeats same procedure, but with deaths data set
-for(country in countries){
-  country_duplicates <- which(deaths_df$Country.Region == country)
-  for(dup in country_duplicates){
-      deaths <- deaths + deaths_df[dup, 1147]
-  }
-  country_deaths <- append(country_deaths, deaths)
-  deaths = 0
-}
-
-# creates a data frame with countries, their respective cases, and respective deaths
-overview <- data.frame(countries, country_cases, country_deaths)
-
-# uses arrange function to create two different data frames, each sorted in descending order of case/death
-casewise <- arrange(overview, -country_cases)
-deathwise <- arrange(overview, -country_deaths)
-
-# creates new data frames that subset only the top 5 
-top_case <- casewise[1:6,]
-top_death <- deathwise[1:6,]
-
-# uses kable to display the data frames as visual tables
-kable(top_case)
-kable(top_death)
-
-
 ```
 
 ### GitHub Log
