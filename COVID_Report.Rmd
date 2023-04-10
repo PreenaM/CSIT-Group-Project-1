@@ -144,8 +144,6 @@ sprintf("%s is %f miles away from %s, %s", recent_region, miles_distance, origin
 ```
 
 ### Objective 4
-
-#### Objective 4.1
 ```{r ob4.1}
 deaths_df <- deaths_df[!(is.na(deaths_df$Lat) | deaths_df$Lat == 0),]
 
@@ -201,10 +199,11 @@ global_risk <- mean(merged_df$risk_score)
 print(global_risk)
 
 ```
-Risk Comparisons
-Lowest Risk: 0%
-Highest Risk: 600%
-Global Risk: 3.2%
+
+## Risk Comparisons
+### Lowest Risk: 0%
+### Highest Risk: 600%
+### Global Risk: 3.2%
 
 ### Objective 5
 ```{r ob5}

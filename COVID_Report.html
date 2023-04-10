@@ -373,6 +373,16 @@ case?</a></li>
 3: How far away are the areas from objective 2 from where the first
 confirmed case(s) occurred?</a></li>
 <li><a href="#objective-4" id="toc-objective-4">Objective 4</a></li>
+</ul></li>
+<li><a href="#risk-comparisons" id="toc-risk-comparisons">Risk
+Comparisons</a>
+<ul>
+<li><a href="#lowest-risk-0" id="toc-lowest-risk-0">Lowest Risk:
+0%</a></li>
+<li><a href="#highest-risk-600" id="toc-highest-risk-600">Highest Risk:
+600%</a></li>
+<li><a href="#global-risk-3.2" id="toc-global-risk-3.2">Global Risk:
+3.2%</a></li>
 <li><a href="#objective-5" id="toc-objective-5">Objective 5</a></li>
 <li><a href="#github-log" id="toc-github-log">GitHub Log</a></li>
 </ul></li>
@@ -491,8 +501,6 @@ sprintf(&quot;%s is %f miles away from %s, %s&quot;, recent_region, miles_distan
 </div>
 <div id="objective-4" class="section level3">
 <h3>Objective 4</h3>
-<div id="objective-4.1" class="section level4">
-<h4>Objective 4.1</h4>
 <pre class="r"><code>deaths_df &lt;- deaths_df[!(is.na(deaths_df$Lat) | deaths_df$Lat == 0),]
 
 # Extract the most recent date
@@ -583,12 +591,18 @@ print(highest_risk_province)</code></pre>
 global_risk &lt;- mean(merged_df$risk_score)
 print(global_risk)</code></pre>
 <pre><code>## [1] 3.209061</code></pre>
-<p>Risk Comparisons Lowest Risk: 0% Highest Risk: 600% Global Risk:
-3.2%</p>
 </div>
-<div id="objective-4.2" class="section level4">
-<h4>Objective 4.2</h4>
 </div>
+<div id="risk-comparisons" class="section level2">
+<h2>Risk Comparisons</h2>
+<div id="lowest-risk-0" class="section level3">
+<h3>Lowest Risk: 0%</h3>
+</div>
+<div id="highest-risk-600" class="section level3">
+<h3>Highest Risk: 600%</h3>
+</div>
+<div id="global-risk-3.2" class="section level3">
+<h3>Global Risk: 3.2%</h3>
 </div>
 <div id="objective-5" class="section level3">
 <h3>Objective 5</h3>
@@ -814,6 +828,11 @@ United Kingdom
 <h3>GitHub Log</h3>
 <pre class="bash"><code>git log --pretty=format:&quot;%nSubject: %s%nAuthor: %aN%nDate: %aD%nBody: %b&quot;</code></pre>
 <pre><code>## 
+## Subject: ob4 global risk added
+## Author: Morgan
+## Date: Sun, 9 Apr 2023 23:34:44 -0700
+## Body: 
+## 
 ## Subject: added global risk
 ## Author: Morgan
 ## Date: Sun, 9 Apr 2023 23:29:00 -0700
@@ -822,6 +841,16 @@ United Kingdom
 ## Subject: highest risk country
 ## Author: Morgan
 ## Date: Sun, 9 Apr 2023 23:19:33 -0700
+## Body: 
+## 
+## Subject: manually resolved merge changes again????
+## Author: PreenaM
+## Date: Sun, 9 Apr 2023 23:18:43 -0700
+## Body: 
+## 
+## Subject: fixed merge error? i don&#39;t even know
+## Author: PreenaM
+## Date: Sun, 9 Apr 2023 23:14:45 -0700
 ## Body: 
 ## 
 ## Subject: lowest risk province
