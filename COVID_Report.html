@@ -421,30 +421,29 @@ data_deaths &lt;- dplyr::select(deaths_df, Province.State, Country.Region, X1.22
 first_day_cases &lt;- cases_df %&gt;%
   filter(X1.22.20 != 0) %&gt;%
   select(Province.State, Country.Region, X1.22.20)
-
 first_day_deaths &lt;- deaths_df %&gt;%
   filter(X1.22.20 != 0) %&gt;%
   select(Province.State, Country.Region, X1.22.20)
 
-# Identify the country with the highest confirmed cases and highest deaths
+# Identify the area with the highest confirmed cases and highest deaths
 max_cases &lt;- first_day_cases %&gt;%
   filter(X1.22.20 == max(X1.22.20)) %&gt;%
-  pull(Country.Region)
-
+  pull(Province.State)
 max_deaths &lt;- first_day_deaths %&gt;%
   filter(X1.22.20 == max(X1.22.20)) %&gt;%
-  pull(Country.Region)
-# Determine if the country is the origin of the outbreak
+  pull(Province.State)
+
+# Determine if the area(s) identified is the origin of the outbreak
 if(max_cases == max_deaths) {
   output &lt;- paste(&quot;The origin of the COVID-19 outbreak was likely&quot;, max_cases)
   print(output)
 }</code></pre>
-<pre><code>## [1] &quot;The origin of the COVID-19 outbreak was likely China&quot;</code></pre>
+<pre><code>## [1] &quot;The origin of the COVID-19 outbreak was likely Hubei&quot;</code></pre>
 </div>
 <div id="objective-2-where-is-the-most-recent-area-to-have-a-first-confirmed-case" class="section level3">
 <h3>Objective 2: Where is the most recent area to have a first confirmed
 case?</h3>
-<pre class="r"><code># iterates through each column that contains a date
+<pre class="r"><code># iterates through each (date-containing) column 
 for(date_column in (5:ncol(cases_df))){
   
   # iterates through each row (case count) for that specific date
@@ -460,6 +459,24 @@ cat(&quot;The most recent area to have a first confirmed case is&quot;, newest_c
 </div>
 <div id="objective-3" class="section level3">
 <h3>Objective 3</h3>
+<pre class="r"><code>recent_region &lt;- &quot;Korea, North&quot;
+origin_city &lt;- &quot;Hubei&quot;
+origin_country &lt;- &quot;China&quot;
+
+origin_lat = cases_df[which(cases_df$Province.State == origin_city), 3]
+origin_long = cases_df[which(cases_df$Province.State == origin_city), 4]
+origin_coordinates &lt;- c(origin_long, origin_lat)
+
+
+recent_lat = cases_df[which(cases_df$Country.Region == recent_region), 3]
+recent_long = cases_df[which(cases_df$Country.Region == recent_region), 4]
+recent_coordinates &lt;- c(recent_long, recent_lat)
+
+distance = distm(origin_coordinates, recent_coordinates, fun=distGeo)
+miles_distance = distance/1609
+
+sprintf(&quot;%s is %f miles away from %s, %s&quot;, recent_region, miles_distance, origin_city, origin_country)</code></pre>
+<pre><code>## [1] &quot;Korea, North is 1070.926759 miles away from Hubei, China&quot;</code></pre>
 </div>
 <div id="objective-4" class="section level3">
 <h3>Objective 4</h3>
@@ -491,6 +508,26 @@ most_confirmations &lt;- which.max(cases_df[, ncol(cases_df)])
 <h3>GitHub Log</h3>
 <pre class="bash"><code>git log --pretty=format:&quot;%nSubject: %s%nAuthor: %aN%nDate: %aD%nBody: %b&quot;</code></pre>
 <pre><code>## 
+## Subject: Merge branch &#39;main&#39; of https://github.com/PreenaM/CSIT-Group-Project-1
+## Author: Morgan
+## Date: Sun, 9 Apr 2023 19:59:18 -0700
+## Body: 
+## 
+## Subject: latest work on Objective 4 unfinished
+## Author: Morgan
+## Date: Sun, 9 Apr 2023 19:58:52 -0700
+## Body: 
+## 
+## Subject: Merge branch &#39;main&#39; of https://github.com/PreenaM/CSIT-Group-Project-1
+## Author: PreenaM
+## Date: Sun, 9 Apr 2023 19:53:29 -0700
+## Body: 
+## 
+## Subject: completed Objective 3 with hard-coded values for recent region and origin region
+## Author: PreenaM
+## Date: Sun, 9 Apr 2023 19:53:23 -0700
+## Body: 
+## 
 ## Subject: added updated objective 1
 ## Author: Morgan
 ## Date: Sun, 9 Apr 2023 18:57:00 -0700

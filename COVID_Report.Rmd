@@ -71,20 +71,19 @@ data_deaths <- dplyr::select(deaths_df, Province.State, Country.Region, X1.22.20
 first_day_cases <- cases_df %>%
   filter(X1.22.20 != 0) %>%
   select(Province.State, Country.Region, X1.22.20)
-
 first_day_deaths <- deaths_df %>%
   filter(X1.22.20 != 0) %>%
   select(Province.State, Country.Region, X1.22.20)
 
-# Identify the country with the highest confirmed cases and highest deaths
+# Identify the area with the highest confirmed cases and highest deaths
 max_cases <- first_day_cases %>%
   filter(X1.22.20 == max(X1.22.20)) %>%
-  pull(Country.Region)
-
+  pull(Province.State)
 max_deaths <- first_day_deaths %>%
   filter(X1.22.20 == max(X1.22.20)) %>%
-  pull(Country.Region)
-# Determine if the country is the origin of the outbreak
+  pull(Province.State)
+
+# Determine if the area(s) identified is the origin of the outbreak
 if(max_cases == max_deaths) {
   output <- paste("The origin of the COVID-19 outbreak was likely", max_cases)
   print(output)
